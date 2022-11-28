@@ -1,16 +1,53 @@
 # duitku
 
-A new Flutter project.
+## Members
 
-## Getting Started
+- Nayyara Airlangga Raharjo
+- Andrew Jeremy
+- Arya Daffa Athaillah
+- Nanda Tristan Ardiansyah
+- Cinthya Yosephine Depari
+- Nataya Shafira
 
-This project is a starting point for a Flutter application.
+## Story
 
-A few resources to get you started if this is your first Flutter project:
+Salah satu isu yang diangkat pada G20 adalah financial inclusion. Financial inclusion adalah kesetaraan peluang dalam mengakses layanan keuangan. G20 ingin meningkatkan financial inclusion. And that’s where we come in.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Duitku adalah aplikasi yang bertujuan untuk meningkatkan financial inclusion dengan memanfaatkan media digital yang sudah ada saat ini. Duitku menyediakan berbagai layanan untuk mendukung tujuan tersebut seperti manajemen uang, berita terkait dunia keuangan, blog keuangan, dll. Dengan berbagai layanan yang disediakan, kami berharap masyarakat dapat lebih mudah mengedukasi diri dan mengakses berbagai layanan keuangan yang ada.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Kini Duitku hadir dalam bentuk aplikasi mobile!
+
+## Modules/Contracts
+
+- Wallet - Angga<br>
+  Fitur yang merepresentasikan dompet-dompet/tabungan seorang pengguna. Pengguna dapat memasukkan dan mengeluarkan uang ke dalam dompet-dompetnya setiap kali terjadi transaksi pemasukan dan pengeluaran. Fitur ini bertujuan agar pengguna dapat lebih terbiasa untuk melacak pemasukan dan pengeluarannya agar bisa lebih mengontrol keuangan mereka sendiri dan bisa lebih percaya diri dalam membeli/menjual instrumen keuangan yang sesuai dengan kondisi keuangan mereka.
+- Blog - Andrew<br>
+  Fitur ini akan menampilkan berbagai artikel informatif mengenai dunia keuangan untuk meningkatkan financial literacy masyarakat.
+- Donasi - Arya<br>
+  Fitur ini berfungsi sebagai donasi tracker yang akan mempermudah user untuk merencanakan kegiatan donasi yang akan dilakukan, seperti tujuan dan nominal donasi.
+- Financial News - Cinthya<br>
+- Investasi - Tristan
+
+## User Roles
+
+### Normal Users
+
+- Authenticated
+  - Mengakses fitur wallet, membuat dompet dan transaksi, melihat report dari wallet
+  - Mengakses halaman blog dan halaman detailnya
+  - Mengakses dan melakukan donasi
+  - Mengakses berita-berita financial
+  - Melakukan investasi
+- Unauthenticated
+  - Melihat halaman utama dan login/registrasi
+
+### Admin/Super Users
+
+- Melakukan administrasi dan pemantauan data via dashboard admin
+- Mengunggah blog post baru serta update berita-berita
+
+## Alur Integrasi dengan Web Service
+
+Pada Proyek Tengah Semester, kami telah membuat Duitku dalam bentuk aplikasi web. Namun, kami juga menambahkan berbagai endpoint yang akan menerima dan mengirim data dalam
+bentuk JSON yang akan bertindak sebagai API yang akan diakses oleh Duitku Mobile. Dari aplikasi mobile kami, akan dilakukan HTTP request ke endpoint-endpoint
+yang sudah disiapkan sebelumnya untuk mengintegrasikan data Duitku dari web server ke aplikasi mobile tersebut.
