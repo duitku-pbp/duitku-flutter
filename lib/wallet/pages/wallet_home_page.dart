@@ -14,6 +14,7 @@ class WalletHomePage extends StatefulWidget {
 
 class _WalletHomePageState extends State<WalletHomePage> {
   Future<void>? _getWallets;
+  Future<void>? _getReport;
   WalletProvider? walletProv;
   double _total = 0;
 
@@ -47,7 +48,10 @@ class _WalletHomePageState extends State<WalletHomePage> {
       drawer: const AppDrawer(),
       body: RefreshIndicator(
         child: FutureBuilder(
-          future: _getWallets ?? walletProv?.getWallets(),
+          future: Future.wait([
+            _getWallets ?? walletProv!.getWallets(),
+            _getReport ?? walletProv!.getReport("2022-11"),
+          ]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -120,9 +124,15 @@ class _WalletHomePageState extends State<WalletHomePage> {
         onRefresh: () {
           setState(() {
             _getWallets = walletProv?.getWallets();
+            _getReport = walletProv?.getReport("2022-11");
           });
+
           _setTotal();
-          return _getWallets!;
+
+          return Future.wait([
+            _getWallets ?? walletProv!.getWallets(),
+            _getReport ?? walletProv!.getReport("2022-11"),
+          ]);
         },
       ),
     );
