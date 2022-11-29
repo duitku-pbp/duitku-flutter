@@ -12,9 +12,9 @@ class Report {
   });
 
   factory Report.fromMap(Map<String, dynamic> map) => Report(
-        income: map["income"],
-        outcome: map["outcome"],
-        netIncome: map["net_income"],
+        income: double.parse(map["income"].toString()),
+        outcome: double.parse(map["outcome"].toString()),
+        netIncome: double.parse(map["net_income"].toString()),
         period: map["period"],
       );
 

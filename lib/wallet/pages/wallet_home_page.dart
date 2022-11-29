@@ -58,7 +58,7 @@ class _WalletHomePageState extends State<WalletHomePage> {
             }
 
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 17),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 17),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

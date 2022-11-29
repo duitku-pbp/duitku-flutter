@@ -4,9 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ReportCard extends StatefulWidget {
-  const ReportCard({
-    super.key,
-  });
+  const ReportCard({super.key});
 
   @override
   State<ReportCard> createState() => _ReportCardState();
@@ -17,6 +15,7 @@ class _ReportCardState extends State<ReportCard> {
   final now = DateTime.now();
   List<String> _periods = [];
 
+  Future<void>? _getReport;
   WalletProvider? walletProv;
   String? _period;
 
@@ -44,35 +43,93 @@ class _ReportCardState extends State<ReportCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: Colors.black,
-        ),
+        border: Border.all(color: Colors.black),
       ),
-      child: Column(
-        children: [
-          Row(
+      child: FutureBuilder(
+        future: _getReport ?? walletProv?.getReport(_period!),
+        builder: (ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return Column(
             children: [
-              Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    value: _period,
-                    items: _periods
-                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                        .toList(),
-                    onChanged: (val) {
-                      setState(() {
-                        _period = val;
-                      });
-                    },
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        borderRadius: BorderRadius.circular(8),
+                        value: _period,
+                        items: _periods
+                            .map((e) =>
+                                DropdownMenuItem(value: e, child: Text(e)))
+                            .toList(),
+                        onChanged: (val) {
+                          setState(() {
+                            _period = val;
+                            _getReport = walletProv?.getReport(_period!);
+                          });
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    "Income",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Text(
+                    "Outcome",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "+${walletProv!.report?.income ?? 0}",
+                    style: const TextStyle(fontSize: 16, color: Colors.green),
+                  ),
+                  Text(
+                    "-${walletProv!.report?.outcome ?? 0}",
+                    style: const TextStyle(fontSize: 16, color: Colors.red),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Net Income",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "${walletProv!.report?.netIncome ?? 0}",
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }

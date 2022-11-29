@@ -11,8 +11,7 @@ class WalletProvider with ChangeNotifier {
   WalletProvider({required this.repository});
 
   List<Wallet> get wallets => _wallets;
-  Report? get report =>
-      _report != null ? Report.fromMap(_report!.toMap()) : null;
+  Report? get report => _report;
 
   Future<void> getWallets() async {
     final res = await repository.getWallets();
