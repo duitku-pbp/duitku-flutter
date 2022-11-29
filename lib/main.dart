@@ -2,6 +2,7 @@ import 'package:duitku/auth/pages/login_page.dart';
 import 'package:duitku/auth/providers/auth_provider.dart';
 import 'package:duitku/common/pages/unknown_page.dart';
 import 'package:duitku/common/widgets/app_drawer.dart';
+import 'package:duitku/wallet/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,7 @@ class DuitkuApp extends StatelessWidget {
         routes: {
           MyHomePage.routeName: (context) => const MyHomePage(),
           LoginPage.routeName: (context) => const LoginPage(),
+          WalletHomePage.routeName: (context) => const WalletHomePage(),
         },
         onUnknownRoute: (settings) => MaterialPageRoute(
           builder: (context) => const UnknownPage(),
