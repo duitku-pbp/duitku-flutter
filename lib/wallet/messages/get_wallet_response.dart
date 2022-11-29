@@ -5,8 +5,7 @@ class GetWalletResponse {
 
   GetWalletResponse({required this.wallets});
 
-  factory GetWalletResponse.fromJson(List<Map<String, dynamic>> json) =>
-      GetWalletResponse(
+  factory GetWalletResponse.fromJson(List<dynamic> json) => GetWalletResponse(
         wallets: List<Wallet>.from(json.map((map) => Wallet.fromMap(map))),
       );
 

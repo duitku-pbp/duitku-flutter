@@ -1,3 +1,4 @@
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:duitku/auth/providers/auth_provider.dart';
 import 'package:duitku/wallet/datasources/wallet_datasource.dart';
 import 'package:duitku/wallet/providers/wallet_provider.dart';
@@ -9,7 +10,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // Providers
-  sl.registerFactory<AuthProvider>(() => AuthProvider(client: sl()));
+  sl.registerFactory<AuthProvider>(() => AuthProvider(client: sl(), jar: sl()));
   sl.registerFactory<WalletProvider>(() => WalletProvider(repository: sl()));
 
   // Repositories
@@ -17,8 +18,10 @@ Future<void> init() async {
       () => WalletRepository(datasource: sl()));
 
   // Datasources
-  sl.registerFactory<WalletDatasource>(() => WalletDatasource(client: sl()));
+  sl.registerFactory<WalletDatasource>(
+      () => WalletDatasource(client: sl(), jar: sl()));
 
   // Clients
   sl.registerLazySingleton(() => http.Client());
+  sl.registerLazySingleton(() => CookieJar());
 }
