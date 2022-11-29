@@ -1,8 +1,22 @@
+import 'package:duitku/wallet/models/wallet.dart';
+import 'package:duitku/wallet/repositories/wallet_repository.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 
 class WalletProvider with ChangeNotifier {
-  final http.Client client;
+  final WalletRepository repository;
+  List<Wallet> _wallets = [];
 
-  WalletProvider({required this.client});
+  WalletProvider({required this.repository});
+
+  List<Wallet> get wallets => [..._wallets];
+
+  Future<void> getWallets() async {
+    final res = await repository.getWallets();
+    res.fold(
+      (failure) => _wallets = [],
+      (wallets) => _wallets = [...wallets],
+    );
+
+    notifyListeners();
+  }
 }
