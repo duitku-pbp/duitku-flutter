@@ -1,6 +1,17 @@
+import 'package:duitku/auth/pages/login_page.dart';
+import 'package:duitku/auth/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
+  const AppDrawer({super.key});
+
+  Future<void> _logout(BuildContext context) async {
+    await Provider.of<AuthProvider>(context, listen: false).logout();
+
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -11,7 +22,9 @@ class AppDrawer extends StatelessWidget {
               "Logout",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            onTap: () {},
+            onTap: () async {
+              await _logout(context);
+            },
           ),
         ],
       ),

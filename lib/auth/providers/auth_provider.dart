@@ -38,4 +38,12 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> logout() async {
+    final uri = Uri.parse("$baseUrl/authentication/logout/");
+    await client.get(uri);
+
+    _sessionId = null;
+    notifyListeners();
+  }
 }

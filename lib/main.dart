@@ -22,18 +22,18 @@ class DuitkuApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProv = di.sl<AuthProvider>();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => di.sl<AuthProvider>(),
+          create: (_) => authProv,
         ),
       ],
       child: MaterialApp(
         title: 'Duitku',
         theme: ThemeData(primarySwatch: Colors.blue),
-        home: di.sl<AuthProvider>().isAuthenticated
-            ? const MyHomePage()
-            : const LoginPage(),
+        home: authProv.isAuthenticated ? const MyHomePage() : const LoginPage(),
         routes: {
           MyHomePage.routeName: (context) => const MyHomePage(),
           LoginPage.routeName: (context) => const LoginPage(),
@@ -55,7 +55,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Duitku")),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
     );
   }
 }
