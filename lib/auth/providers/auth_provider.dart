@@ -1,11 +1,10 @@
 import 'package:duitku/common/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
 
 class AuthProvider with ChangeNotifier {
   String? _sessionId;
-  final IOClient client;
+  final http.Client client;
 
   AuthProvider({required this.client});
 

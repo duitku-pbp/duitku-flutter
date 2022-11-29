@@ -4,41 +4,42 @@ import 'package:duitku/common/pages/unknown_page.dart';
 import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/io_client.dart';
 import 'package:provider/provider.dart';
+import 'injection.dart' as di;
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  runApp(DuitkuApp());
+
+  await di.init();
+
+  runApp(const DuitkuApp());
 }
 
 class DuitkuApp extends StatelessWidget {
-  DuitkuApp({super.key});
-
-  final client = IOClient();
+  const DuitkuApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => AuthProvider(client: client),
+          create: (context) => di.sl<AuthProvider>(),
         ),
       ],
-      child: Consumer<AuthProvider>(
-        builder: (context, auth, _) => MaterialApp(
-          title: 'Duitku',
-          theme: ThemeData(primarySwatch: Colors.blue),
-          home: auth.isAuthenticated ? const MyHomePage() : const LoginPage(),
-          routes: {
-            MyHomePage.routeName: (context) => const MyHomePage(),
-            LoginPage.routeName: (context) => const LoginPage(),
-          },
-          onUnknownRoute: (settings) => MaterialPageRoute(
-            builder: (context) => const UnknownPage(),
-          ),
+      child: MaterialApp(
+        title: 'Duitku',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: di.sl<AuthProvider>().isAuthenticated
+            ? const MyHomePage()
+            : const LoginPage(),
+        routes: {
+          MyHomePage.routeName: (context) => const MyHomePage(),
+          LoginPage.routeName: (context) => const LoginPage(),
+        },
+        onUnknownRoute: (settings) => MaterialPageRoute(
+          builder: (context) => const UnknownPage(),
         ),
       ),
     );
