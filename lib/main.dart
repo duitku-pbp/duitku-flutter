@@ -34,7 +34,7 @@ class DuitkuApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Duitku',
-        theme: ThemeData(primarySwatch: Colors.blue),
+        theme: ThemeData(primarySwatch: Colors.green),
         home: authProv.isAuthenticated ? const MyHomePage() : const LoginPage(),
         routes: {
           MyHomePage.routeName: (context) => const MyHomePage(),
