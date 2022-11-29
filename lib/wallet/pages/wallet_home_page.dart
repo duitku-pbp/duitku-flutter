@@ -82,41 +82,44 @@ class _WalletHomePageState extends State<WalletHomePage> {
                       textAlign: TextAlign.left,
                     ),
                     const SizedBox(height: 18),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemBuilder: (ctx, i) => Container(
-                        padding: const EdgeInsets.all(0),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 300),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (ctx, i) => Container(
+                          padding: const EdgeInsets.all(0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                            ),
+                            borderRadius: i == 0
+                                ? const BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5),
+                                  )
+                                : i == walletProv!.wallets.length - 1
+                                    ? const BorderRadius.only(
+                                        bottomLeft: Radius.circular(5),
+                                      )
+                                    : BorderRadius.circular(0),
                           ),
-                          borderRadius: i == 0
-                              ? const BorderRadius.only(
-                                  topLeft: Radius.circular(5),
-                                  topRight: Radius.circular(5),
-                                )
-                              : i == walletProv!.wallets.length - 1
-                                  ? const BorderRadius.only(
-                                      bottomLeft: Radius.circular(5),
-                                    )
-                                  : BorderRadius.circular(0),
-                        ),
-                        child: ListTile(
-                          title: Text(
-                            walletProv!.wallets[i].name,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          subtitle: Text(
-                            "Rp. ${walletProv!.wallets[i].balance}",
-                            style: TextStyle(
-                              color: walletProv!.wallets[i].balance >= 0
-                                  ? Colors.green
-                                  : Colors.red,
+                          child: ListTile(
+                            title: Text(
+                              walletProv!.wallets[i].name,
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            subtitle: Text(
+                              "Rp. ${walletProv!.wallets[i].balance}",
+                              style: TextStyle(
+                                color: walletProv!.wallets[i].balance >= 0
+                                    ? Colors.green
+                                    : Colors.red,
+                              ),
                             ),
                           ),
                         ),
+                        itemCount: walletProv!.wallets.length,
                       ),
-                      itemCount: walletProv!.wallets.length,
                     ),
                   ],
                 ),
