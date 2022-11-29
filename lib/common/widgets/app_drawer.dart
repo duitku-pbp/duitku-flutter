@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
-  Future<void> _logout(BuildContext context) async {
+  Future<void> _logout(BuildContext context, [bool mounted = true]) async {
     await Provider.of<AuthProvider>(context, listen: false).logout();
 
-    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+    }
   }
 
   @override
