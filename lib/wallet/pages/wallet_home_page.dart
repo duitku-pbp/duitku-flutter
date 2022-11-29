@@ -48,10 +48,13 @@ class _WalletHomePageState extends State<WalletHomePage> {
       drawer: const AppDrawer(),
       body: RefreshIndicator(
         child: FutureBuilder(
-          future: Future.wait([
-            _getWallets ?? walletProv!.getWallets(),
-            _getReport ?? walletProv!.getReport("2022-11"),
-          ]),
+          future: Future.wait(
+            [
+              _getWallets ?? walletProv!.getWallets(),
+              _getReport ?? walletProv!.getReport("2022-11"),
+            ],
+            eagerError: true,
+          ),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -129,10 +132,13 @@ class _WalletHomePageState extends State<WalletHomePage> {
 
           _setTotal();
 
-          return Future.wait([
-            _getWallets ?? walletProv!.getWallets(),
-            _getReport ?? walletProv!.getReport("2022-11"),
-          ]);
+          return Future.wait(
+            [
+              _getWallets ?? walletProv!.getWallets(),
+              _getReport ?? walletProv!.getReport("2022-11"),
+            ],
+            eagerError: true,
+          );
         },
       ),
     );
