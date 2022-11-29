@@ -18,7 +18,7 @@ class AuthProvider with ChangeNotifier {
     return res.headers["set-cookie"]?.split(";")[0].split("=")[1] ?? "";
   }
 
-  Future<void> signIn({
+  Future<void> login({
     required String username,
     required String password,
   }) async {
@@ -31,9 +31,12 @@ class AuthProvider with ChangeNotifier {
     req.headers.addAll({"Cookie": "csrftoken=$csrftoken;"});
     final res = await client.send(req);
 
+    String? oldSessionId = _sessionId;
     _sessionId =
         res.headers["set-cookie"]?.split("sessionid=")[1].split(";")[0];
 
-    notifyListeners();
+    if (oldSessionId != _sessionId) {
+      notifyListeners();
+    }
   }
 }

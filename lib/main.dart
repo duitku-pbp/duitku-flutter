@@ -2,10 +2,14 @@ import 'package:duitku/auth/pages/login_page.dart';
 import 'package:duitku/auth/providers/auth_provider.dart';
 import 'package:duitku/common/pages/unknown_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   runApp(DuitkuApp());
 }
 
