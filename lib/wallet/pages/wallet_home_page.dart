@@ -1,5 +1,6 @@
 import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:duitku/wallet/providers/wallet_provider.dart';
+import 'package:duitku/wallet/widgets/report_card.dart';
 import 'package:duitku/wallet/widgets/wallet_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,18 +16,19 @@ class WalletHomePage extends StatefulWidget {
 
 class _WalletHomePageState extends State<WalletHomePage> {
   Future<void>? _getWallets;
-  Future<void>? _getReport;
   WalletProvider? walletProv;
   double _total = 0;
 
   @override
   void initState() {
     walletProv = Provider.of<WalletProvider>(context, listen: false);
-    _setTotal();
+    _init();
     super.initState();
   }
 
-  void _setTotal() {
+  void _init() async {
+    await walletProv?.getWallets();
+
     final wallets = walletProv?.wallets;
     if (wallets == null || wallets.isEmpty) {
       return;
@@ -49,13 +51,7 @@ class _WalletHomePageState extends State<WalletHomePage> {
       drawer: const AppDrawer(),
       body: RefreshIndicator(
         child: FutureBuilder(
-          future: Future.wait(
-            [
-              _getWallets ?? walletProv!.getWallets(),
-              _getReport ?? walletProv!.getReport("2022-11"),
-            ],
-            eagerError: true,
-          ),
+          future: _getWallets ?? walletProv!.getWallets(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -68,6 +64,17 @@ class _WalletHomePageState extends State<WalletHomePage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Text(
+                      "Report",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    const SizedBox(height: 18),
+                    const ReportCard(),
+                    const SizedBox(height: 40),
                     const Text(
                       "My Wallets",
                       style: TextStyle(
@@ -93,18 +100,11 @@ class _WalletHomePageState extends State<WalletHomePage> {
         onRefresh: () {
           setState(() {
             _getWallets = walletProv?.getWallets();
-            _getReport = walletProv?.getReport("2022-11");
           });
 
-          _setTotal();
+          _init();
 
-          return Future.wait(
-            [
-              _getWallets ?? walletProv!.getWallets(),
-              _getReport ?? walletProv!.getReport("2022-11"),
-            ],
-            eagerError: true,
-          );
+          return _getWallets ?? walletProv!.getWallets();
         },
       ),
     );
