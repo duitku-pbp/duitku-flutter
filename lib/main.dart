@@ -1,6 +1,7 @@
 import 'package:duitku/auth/pages/login_page.dart';
 import 'package:duitku/auth/providers/auth_provider.dart';
 import 'package:duitku/common/pages/unknown_page.dart';
+import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
@@ -53,6 +54,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Duitku")),
+      drawer: AppDrawer(),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 
 class UnknownPage extends StatelessWidget {
@@ -5,8 +6,10 @@ class UnknownPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      appBar: AppBar(title: const Text("Duitku")),
+      drawer: AppDrawer(),
+      body: const Center(
         child: Text("Page not found"),
       ),
     );
