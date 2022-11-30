@@ -1,4 +1,3 @@
-import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:duitku/wallet/providers/wallet_provider.dart';
 import 'package:duitku/wallet/widgets/report_card.dart';
 import 'package:duitku/wallet/widgets/wallet_scaffold.dart';

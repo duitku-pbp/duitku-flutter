@@ -1,4 +1,6 @@
 import 'package:duitku/common/widgets/app_drawer.dart';
+import 'package:duitku/wallet/pages/transactions_page.dart';
+import 'package:duitku/wallet/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 
 class WalletScaffold extends StatefulWidget {
@@ -42,6 +44,13 @@ class _WalletScaffoldState extends State<WalletScaffold> {
         setState(() {
           _curIdx = newIdx;
         });
+
+        if (_curIdx == 0) {
+          Navigator.of(context).pushReplacementNamed(WalletHomePage.routeName);
+        } else if (_curIdx == 1) {
+          Navigator.of(context)
+              .pushReplacementNamed(TransactionsPage.routeName);
+        }
       },
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
