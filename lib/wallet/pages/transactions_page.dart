@@ -130,7 +130,21 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                           ),
                                           subtitle: _walletId != "all"
                                               ? null
-                                              : Text(trx.wallet.name),
+                                              : Text(
+                                                  trx.wallet.name,
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                          trailing: Text(
+                                            "Rp. ${trx.type == TransactionType.income ? "+" : "-"}${trx.amount}",
+                                            style: TextStyle(
+                                              color: trx.type ==
+                                                      TransactionType.income
+                                                  ? Colors.green
+                                                  : Colors.red,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -216,7 +230,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
           },
         ),
         onRefresh: () async {
-          _getTransactions = walletProv?.getTransactions(_walletId);
+          await walletProv?.getTransactions(_walletId);
           _setTotalBalance();
         },
       ),
