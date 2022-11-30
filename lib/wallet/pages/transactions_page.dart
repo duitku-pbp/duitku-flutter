@@ -77,7 +77,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                   SingleChildScrollView(
                     child: Column(
                       children: [
-                        const SizedBox(height: 100),
+                        const SizedBox(height: 120),
                         ...walletProv!.transactionGroups.map(
                           (group) => Column(
                             mainAxisSize: MainAxisSize.min,
@@ -163,6 +163,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                     child: Container(
                       decoration: const BoxDecoration(
                         color: Colors.white,
+                        border: Border(bottom: BorderSide(color: Colors.grey)),
                       ),
                       padding: const EdgeInsets.only(bottom: 15),
                       child: Column(
