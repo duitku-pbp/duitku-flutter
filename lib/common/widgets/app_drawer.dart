@@ -21,7 +21,9 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authProv = Provider.of<AuthProvider>(context, listen: false);
+    final authProv = Provider.of<AuthProvider>(context);
+    authProv.init();
+
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

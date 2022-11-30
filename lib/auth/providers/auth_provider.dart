@@ -4,16 +4,33 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:duitku/common/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
   String? _sessionId;
+  final SharedPreferences prefs;
   final http.Client client;
   final CookieJar jar;
 
   AuthProvider({
+    required this.prefs,
     required this.client,
     required this.jar,
   });
+
+  Future<void> init() async {
+    final uri = Uri.parse(baseUrl);
+
+    final sessionId = prefs.getString("sessionid");
+    final csrfToken = prefs.getString("csrftoken");
+    if (sessionId != null && sessionId.isNotEmpty) {
+      _sessionId = sessionId;
+
+      await jar.saveFromResponse(uri, [Cookie("sessionid", sessionId)]);
+    }
+
+    await jar.saveFromResponse(uri, [Cookie("csrfToken", csrfToken ?? "")]);
+  }
 
   bool get isAuthenticated {
     return _sessionId != null;
@@ -30,6 +47,7 @@ class AuthProvider with ChangeNotifier {
       Uri.parse(baseUrl),
       [Cookie("csrftoken", csrfToken)],
     );
+    await prefs.setString("csrftoken", csrfToken);
 
     return csrfToken;
   }
@@ -53,7 +71,8 @@ class AuthProvider with ChangeNotifier {
 
     if (oldSessionId != _sessionId) {
       final cookies = [Cookie("sessionid", _sessionId ?? "")];
-      jar.saveFromResponse(Uri.parse(baseUrl), cookies);
+      await jar.saveFromResponse(Uri.parse(baseUrl), cookies);
+      await prefs.setString("sessionid", _sessionId ?? "");
 
       notifyListeners();
     }
@@ -65,6 +84,8 @@ class AuthProvider with ChangeNotifier {
 
     _sessionId = null;
     await jar.delete(Uri.parse(baseUrl));
+    await prefs.remove("sessionid");
+    await prefs.remove("csrftoken");
 
     notifyListeners();
   }
