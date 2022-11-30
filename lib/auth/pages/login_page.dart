@@ -140,6 +140,21 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ],
                           ),
+                          const SizedBox(height: 20),
+                          Center(
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  MyHomePage.routeName,
+                                );
+                              },
+                              child: const Text(
+                                "Sign in as Guest",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
