@@ -54,7 +54,7 @@ class _WalletScaffoldState extends State<WalletScaffold> {
       },
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.atm), label: "Transactions"),
+        BottomNavigationBarItem(icon: Icon(Icons.money), label: "Transactions"),
       ],
     );
   }
