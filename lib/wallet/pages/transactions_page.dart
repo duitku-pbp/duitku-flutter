@@ -157,9 +157,9 @@ class _TransactionsPageState extends State<TransactionsPage> {
                     ),
                   ),
                   Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
+                    top: walletProv!.transactionGroups.isEmpty ? null : 0,
+                    left: walletProv!.transactionGroups.isEmpty ? null : 0,
+                    right: walletProv!.transactionGroups.isEmpty ? null : 0,
                     child: Container(
                       decoration: const BoxDecoration(
                         color: Colors.white,
