@@ -26,6 +26,7 @@ class WalletTiles extends StatelessWidget {
                 : i == wallets.length - 1
                     ? const BorderRadius.only(
                         bottomLeft: Radius.circular(5),
+                        bottomRight: Radius.circular(5),
                       )
                     : BorderRadius.circular(0),
           ),
