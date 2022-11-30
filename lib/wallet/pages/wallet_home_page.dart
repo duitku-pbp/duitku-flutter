@@ -1,6 +1,7 @@
 import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:duitku/wallet/providers/wallet_provider.dart';
 import 'package:duitku/wallet/widgets/report_card.dart';
+import 'package:duitku/wallet/widgets/wallet_scaffold.dart';
 import 'package:duitku/wallet/widgets/wallet_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,9 +47,9 @@ class _WalletHomePageState extends State<WalletHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("My Wallets")),
-      drawer: const AppDrawer(),
+    return WalletScaffold(
+      idx: 0,
+      title: "My Wallets",
       body: RefreshIndicator(
         child: FutureBuilder(
           future: _getWallets ?? walletProv!.getWallets(),
