@@ -3,6 +3,7 @@ import 'package:duitku/common/exceptions.dart';
 import 'package:duitku/common/failures.dart';
 import 'package:duitku/wallet/datasources/wallet_datasource.dart';
 import 'package:duitku/wallet/models/report.dart';
+import 'package:duitku/wallet/models/transaction_group.dart';
 import 'package:duitku/wallet/models/wallet.dart';
 
 class WalletRepository {
@@ -22,6 +23,17 @@ class WalletRepository {
   Future<Either<Failure, Report>> getReport(String period) async {
     try {
       final res = await datasource.getReport(period);
+      return Right(res);
+    } on HttpException {
+      return Left(HttpFailure("An error occured"));
+    }
+  }
+
+  Future<Either<Failure, List<TransactionGroup>>> getTransactions([
+    String wallet = "all",
+  ]) async {
+    try {
+      final res = await datasource.getTransactions(wallet);
       return Right(res);
     } on HttpException {
       return Left(HttpFailure("An error occured"));
