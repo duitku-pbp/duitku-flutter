@@ -22,6 +22,8 @@ class WalletScaffold extends StatefulWidget {
 class _WalletScaffoldState extends State<WalletScaffold> {
   late int _curIdx;
 
+  final GlobalKey<PopupMenuButtonState> _btnkey = GlobalKey();
+
   @override
   void initState() {
     _curIdx = widget.idx;
@@ -59,6 +61,31 @@ class _WalletScaffoldState extends State<WalletScaffold> {
     );
   }
 
+  Future<void> _showAddBtnPopupMenu() async {
+    final renderBox = _btnkey.currentContext?.findRenderObject() as RenderBox;
+    final size = renderBox.size;
+    final offset = renderBox.localToGlobal(Offset.zero);
+
+    await showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        offset.dx - size.width,
+        offset.dy - 2 * size.height - 10,
+        offset.dx,
+        offset.dy,
+      ),
+      items: [
+        const PopupMenuItem(
+          child: Text("Add Wallet", style: TextStyle(fontSize: 18)),
+        ),
+        const PopupMenuItem(
+          child: Text("Add Transaction", style: TextStyle(fontSize: 18)),
+        ),
+      ],
+      elevation: 1,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +93,8 @@ class _WalletScaffoldState extends State<WalletScaffold> {
       drawer: const AppDrawer(),
       body: widget.body,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        key: _btnkey,
+        onPressed: _showAddBtnPopupMenu,
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
