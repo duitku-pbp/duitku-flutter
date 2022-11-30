@@ -45,7 +45,7 @@ class Transaction {
         id: map["id"],
         actorId: map["actor"],
         wallet: Wallet.fromMap(map["wallet"]),
-        amount: double.tryParse(map["amount"]) ?? 0,
+        amount: double.tryParse(map["amount"].toString()) ?? 0,
         doneOn: DateTime.tryParse(map["done_on"]) ?? DateTime(1970, 1, 1),
         type: TransactionType.fromString(map["type"]),
         description: map["description"],

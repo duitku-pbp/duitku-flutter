@@ -15,7 +15,7 @@ class Wallet {
 
   factory Wallet.fromMap(Map<String, dynamic> map) => Wallet(
         id: map["id"],
-        ownerId: map["owner_id"],
+        ownerId: map["owner_id"] ?? map["owner"],
         name: map["name"],
         description: map["description"],
         balance: map["balance"],
