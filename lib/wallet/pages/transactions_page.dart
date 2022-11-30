@@ -164,6 +164,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                       decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
+                      padding: const EdgeInsets.only(bottom: 15),
                       child: Column(
                         children: [
                           const Center(
