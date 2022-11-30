@@ -60,26 +60,37 @@ class _ReportCardState extends State<ReportCard> {
               Row(
                 children: [
                   Expanded(
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        borderRadius: BorderRadius.circular(8),
-                        value: _period,
-                        items: _periods
-                            .map((e) =>
-                                DropdownMenuItem(value: e, child: Text(e)))
-                            .toList(),
-                        onChanged: (val) {
-                          setState(() {
-                            _period = val;
-                            _getReport = walletProv?.getReport(_period!);
-                          });
-                        },
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 6,
+                          horizontal: 10,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          borderRadius: BorderRadius.circular(8),
+                          value: _period,
+                          items: _periods
+                              .map((e) =>
+                                  DropdownMenuItem(value: e, child: Text(e)))
+                              .toList(),
+                          onChanged: (val) {
+                            setState(() {
+                              _period = val;
+                              _getReport = walletProv?.getReport(_period!);
+                            });
+                          },
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
