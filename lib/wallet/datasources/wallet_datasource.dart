@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:duitku/common/constants.dart';
 import 'package:duitku/common/exceptions.dart';
+import 'package:duitku/wallet/messages/create_transaction_request.dart';
 import 'package:duitku/wallet/messages/get_report_response.dart';
 import 'package:duitku/wallet/messages/get_transactions_response.dart';
 import 'package:duitku/wallet/messages/get_wallet_response.dart';
@@ -19,6 +21,19 @@ class WalletDatasource {
     required this.client,
     required this.jar,
   });
+
+  Future<void> _setCsrfToken() async {
+    final uri = Uri.parse("$baseUrl/authentication/login/");
+
+    final res = await client.get(uri);
+    final csrfToken =
+        res.headers["set-cookie"]?.split(";")[0].split("=")[1] ?? "";
+
+    await jar.saveFromResponse(
+      Uri.parse(baseUrl),
+      [Cookie("csrftoken", csrfToken)],
+    );
+  }
 
   Future<List<Wallet>> getWallets() async {
     final uri = Uri.parse("$baseUrl/wallet/api/");
@@ -71,6 +86,27 @@ class WalletDatasource {
       return GetTransactionsResponse.fromJson(
         json.decode(res.body),
       ).transactionGroups;
+    }
+
+    throw HttpException();
+  }
+
+  Future<void> createTransaction({
+    required CreateTransactionRequest body,
+  }) async {
+    await _setCsrfToken();
+
+    final uri = Uri.parse("$baseUrl/wallet/api/transaction/create/");
+    final cookies = (await jar.loadForRequest(uri)).join(" ");
+
+    final res = await client.post(
+      uri,
+      body: json.encode(body.toJson()),
+      headers: {"Cookie": cookies},
+    );
+
+    if (res.statusCode == 301) {
+      return;
     }
 
     throw HttpException();
