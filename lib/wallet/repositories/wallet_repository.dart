@@ -47,8 +47,8 @@ class WalletRepository {
     try {
       final res = await datasource.createTransaction(body: body);
       return Right(res);
-    } on HttpException {
-      return Left(HttpFailure("Failed to create transaction"));
+    } on HttpException catch (err) {
+      return Left(HttpFailure(err.message));
     }
   }
 }

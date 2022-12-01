@@ -1,1 +1,5 @@
-class HttpException implements Exception {}
+class HttpException implements Exception {
+  final String message;
+
+  HttpException([this.message = ""]);
+}

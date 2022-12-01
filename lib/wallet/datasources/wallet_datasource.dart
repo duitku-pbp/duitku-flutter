@@ -122,6 +122,6 @@ class WalletDatasource {
       return;
     }
 
-    throw HttpException();
+    throw HttpException(json.decode(res.body)["message"] ?? "An error occured");
   }
 }
