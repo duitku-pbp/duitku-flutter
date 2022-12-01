@@ -2,6 +2,7 @@ import 'package:duitku/wallet/messages/create_transaction_request.dart';
 import 'package:duitku/wallet/models/transaction.dart';
 import 'package:duitku/wallet/pages/transactions_page.dart';
 import 'package:duitku/wallet/providers/wallet_provider.dart';
+import 'package:duitku/wallet/states/create_transaction_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -50,15 +51,29 @@ class _CreateTransactionPageState extends State<CreateTransactionPage> {
 
       await walletProv?.createTransaction(body: body);
 
-      if (walletProv?.createTransactionRequestState ==
-          CreateTransactionRequestState.ok) {
+      if (walletProv?.createTransactionState is CreateTransactionOkState) {
         walletProv?.resetStates();
 
         if (mounted) {
           Navigator.of(context)
               .pushReplacementNamed(TransactionsPage.routeName);
         }
-      } else {}
+      } else {
+        final message =
+            walletProv?.createTransactionState is CreateTransactionFailureState
+                ? (walletProv?.createTransactionState
+                        as CreateTransactionFailureState)
+                    .message
+                : "Inital state";
+        final snackBar = SnackBar(
+          content: Text(message),
+          duration: const Duration(seconds: 3),
+        );
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      }
     }
   }
 
