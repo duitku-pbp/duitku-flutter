@@ -8,7 +8,7 @@ class UnknownPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Duitku")),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: const Center(
         child: Text("Page not found"),
       ),
