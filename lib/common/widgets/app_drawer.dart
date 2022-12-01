@@ -25,7 +25,6 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   void initState() {
     authProv = Provider.of<AuthProvider>(context, listen: false);
-    authProv?.init();
 
     super.initState();
   }

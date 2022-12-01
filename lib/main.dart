@@ -28,6 +28,8 @@ class DuitkuApp extends StatelessWidget {
     final authProv = di.sl<AuthProvider>();
     final walletProv = di.sl<WalletProvider>();
 
+    authProv.init();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => authProv),
@@ -36,7 +38,9 @@ class DuitkuApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Duitku',
         theme: ThemeData(primarySwatch: Colors.green),
-        initialRoute: MyHomePage.routeName,
+        initialRoute: authProv.isAuthenticated
+            ? MyHomePage.routeName
+            : LoginPage.routeName,
         routes: {
           MyHomePage.routeName: (context) => const MyHomePage(),
           LoginPage.routeName: (context) => const LoginPage(),
