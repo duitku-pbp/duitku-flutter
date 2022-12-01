@@ -24,6 +24,12 @@ class WalletProvider with ChangeNotifier {
   CreateTransactionRequestState get createTransactionRequestState =>
       _createTransactionRequestState;
 
+  void resetStates() {
+    _createTransactionRequestState = CreateTransactionRequestState.initial;
+
+    notifyListeners();
+  }
+
   Future<void> getWallets() async {
     final res = await repository.getWallets();
     res.fold(
