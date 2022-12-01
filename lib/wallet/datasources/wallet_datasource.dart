@@ -35,6 +35,17 @@ class WalletDatasource {
     );
   }
 
+  Future<String> _getCsrfToken() async {
+    final cookies = await jar.loadForRequest(Uri.parse(baseUrl));
+
+    return cookies
+        .firstWhere(
+          (c) => c.name == "csrftoken",
+          orElse: () => Cookie("csrftoken", ""),
+        )
+        .value;
+  }
+
   Future<List<Wallet>> getWallets() async {
     final uri = Uri.parse("$baseUrl/wallet/api/");
     final cookies = await jar.loadForRequest(uri);
@@ -97,15 +108,17 @@ class WalletDatasource {
     await _setCsrfToken();
 
     final uri = Uri.parse("$baseUrl/wallet/api/transaction/create/");
-    final cookies = (await jar.loadForRequest(uri)).join(" ");
+    final cookies = await jar.loadForRequest(uri);
+    final csrfToken = await _getCsrfToken();
+    final cookieStr = cookies.join(" ").replaceAll(" HttpOnly", "");
 
     final res = await client.post(
       uri,
       body: json.encode(body.toJson()),
-      headers: {"Cookie": cookies},
+      headers: {"Cookie": cookieStr, "X-CSRFTOKEN": csrfToken},
     );
 
-    if (res.statusCode == 301) {
+    if (res.statusCode == 302) {
       return;
     }
 
