@@ -33,6 +33,4 @@ Future<void> init() async {
   sl.registerLazySingleton(() => prefs);
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => CookieJar());
-
-  await sl<AuthProvider>().init();
 }

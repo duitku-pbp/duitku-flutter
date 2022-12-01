@@ -4,15 +4,30 @@ import 'package:duitku/wallet/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
 
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  AuthProvider? authProv;
+
   Future<void> _logout(BuildContext context, [bool mounted = true]) async {
-    await Provider.of<AuthProvider>(context, listen: false).logout();
+    await authProv?.logout();
 
     if (mounted) {
       Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
     }
+  }
+
+  @override
+  void initState() {
+    authProv = Provider.of<AuthProvider>(context, listen: false);
+    authProv?.init();
+
+    super.initState();
   }
 
   void _login(BuildContext context) {
@@ -21,9 +36,6 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authProv = Provider.of<AuthProvider>(context);
-    authProv.init();
-
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +50,7 @@ class AppDrawer extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Text(
-                        authProv.isAuthenticated
+                        authProv!.isAuthenticated
                             ? "Logged In"
                             : "Logged in as Guest",
                         style: const TextStyle(fontSize: 18),
@@ -49,7 +61,7 @@ class AppDrawer extends StatelessWidget {
               ),
             ],
           ),
-          authProv.isAuthenticated
+          authProv!.isAuthenticated
               ? ListTile(
                   title: const Text(
                     "Wallet",
@@ -68,12 +80,12 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text(
-              authProv.isAuthenticated ? "Logout" : "Login",
+              authProv!.isAuthenticated ? "Logout" : "Login",
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             leading: const Icon(Icons.logout),
             onTap: () async {
-              if (authProv.isAuthenticated) {
+              if (authProv!.isAuthenticated) {
                 await _logout(context);
               } else {
                 _login(context);
