@@ -1,8 +1,6 @@
 import 'package:duitku/wallet/models/transaction.dart';
 import 'package:intl/intl.dart';
 
-enum CreateTransactionRequestState { initial, ok, error }
-
 class CreateTransactionRequest {
   int walletId;
   double amount;
