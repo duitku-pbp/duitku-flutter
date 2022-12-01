@@ -1,5 +1,6 @@
 import 'package:duitku/auth/pages/login_page.dart';
 import 'package:duitku/auth/providers/auth_provider.dart';
+import 'package:duitku/main.dart';
 import 'package:duitku/wallet/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,6 +60,16 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
             ],
+          ),
+          ListTile(
+            title: const Text(
+              "Home",
+              style: TextStyle(fontSize: 16),
+            ),
+            leading: const Icon(Icons.home),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
+            },
           ),
           authProv!.isAuthenticated
               ? ListTile(
