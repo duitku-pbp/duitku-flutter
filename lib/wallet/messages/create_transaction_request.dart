@@ -24,7 +24,7 @@ class CreateTransactionRequest {
         "wallet": walletId,
         "amount": amount,
         "type": type.toString(),
-        "done_on": _dateFormatter.format(doneOn),
+        "done-on": _dateFormatter.format(doneOn),
         "description": description,
       };
 }
