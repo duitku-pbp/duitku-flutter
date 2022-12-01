@@ -2,6 +2,7 @@ import 'package:duitku/auth/pages/login_page.dart';
 import 'package:duitku/auth/providers/auth_provider.dart';
 import 'package:duitku/common/pages/unknown_page.dart';
 import 'package:duitku/common/widgets/app_drawer.dart';
+import 'package:duitku/wallet/pages/create_transaction_page.dart';
 import 'package:duitku/wallet/pages/transactions_page.dart';
 import 'package:duitku/wallet/pages/wallet_home_page.dart';
 import 'package:duitku/wallet/providers/wallet_provider.dart';
@@ -46,6 +47,8 @@ class DuitkuApp extends StatelessWidget {
           LoginPage.routeName: (context) => const LoginPage(),
           WalletHomePage.routeName: (context) => const WalletHomePage(),
           TransactionsPage.routeName: (context) => const TransactionsPage(),
+          CreateTransactionPage.routeName: (context) =>
+              const CreateTransactionPage(),
         },
         onUnknownRoute: (settings) => MaterialPageRoute(
           builder: (context) => const UnknownPage(),
