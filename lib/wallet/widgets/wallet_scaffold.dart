@@ -1,4 +1,5 @@
 import 'package:duitku/common/widgets/app_drawer.dart';
+import 'package:duitku/wallet/pages/create_transaction_page.dart';
 import 'package:duitku/wallet/pages/transactions_page.dart';
 import 'package:duitku/wallet/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class WalletScaffold extends StatefulWidget {
 
 class _WalletScaffoldState extends State<WalletScaffold> {
   late int _curIdx;
+  String _addItem = "";
 
   final GlobalKey<PopupMenuButtonState> _btnkey = GlobalKey();
 
@@ -75,15 +77,36 @@ class _WalletScaffoldState extends State<WalletScaffold> {
         offset.dy,
       ),
       items: [
-        const PopupMenuItem(
-          child: Text("Add Wallet", style: TextStyle(fontSize: 18)),
+        PopupMenuItem(
+          child: const Text("Add Wallet", style: TextStyle(fontSize: 18)),
+          onTap: () {
+            setState(() {
+              _addItem = "Add Wallet";
+            });
+          },
         ),
-        const PopupMenuItem(
-          child: Text("Add Transaction", style: TextStyle(fontSize: 18)),
+        PopupMenuItem(
+          child: const Text("Add Transaction", style: TextStyle(fontSize: 18)),
+          onTap: () {
+            setState(() {
+              _addItem = "Add Transaction";
+            });
+          },
         ),
       ],
       elevation: 1,
     );
+
+    if (_addItem == "Add Wallet") {
+    } else if (_addItem == "Add Transaction") {
+      if (mounted) {
+        Navigator.of(context).pushNamed(CreateTransactionPage.routeName);
+      }
+    }
+
+    setState(() {
+      _addItem = "";
+    });
   }
 
   @override

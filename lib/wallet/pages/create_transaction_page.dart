@@ -1,5 +1,6 @@
 import 'package:duitku/wallet/messages/create_transaction_request.dart';
 import 'package:duitku/wallet/models/transaction.dart';
+import 'package:duitku/wallet/pages/transactions_page.dart';
 import 'package:duitku/wallet/providers/wallet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,11 +36,17 @@ class _CreateTransactionPageState extends State<CreateTransactionPage> {
                 type: TransactionType.income,
                 amount: 1000,
                 doneOn: DateTime.now(),
-                description: "",
+                description: "Test",
               ),
             );
 
-            walletProv?.resetStates();
+            if (mounted &&
+                walletProv?.createTransactionRequestState ==
+                    CreateTransactionRequestState.ok) {
+              walletProv?.resetStates();
+              Navigator.of(context)
+                  .pushReplacementNamed(TransactionsPage.routeName);
+            }
           },
           child: const Text("Create"),
         ),
