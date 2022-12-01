@@ -29,7 +29,7 @@ class AuthProvider with ChangeNotifier {
       await jar.saveFromResponse(uri, [Cookie("sessionid", sessionId)]);
     }
 
-    await jar.saveFromResponse(uri, [Cookie("csrfToken", csrfToken ?? "")]);
+    await jar.saveFromResponse(uri, [Cookie("csrftoken", csrfToken ?? "")]);
   }
 
   bool get isAuthenticated {
