@@ -47,13 +47,17 @@ class _CreateTransactionPageState extends State<CreateTransactionPage> {
         doneOn: _doneOn!,
         description: _description!,
       );
-      print(body.toJson());
+
+      await walletProv?.createTransaction(body: body);
 
       if (walletProv?.createTransactionRequestState ==
           CreateTransactionRequestState.ok) {
         walletProv?.resetStates();
 
-        Navigator.of(context).pushReplacementNamed(TransactionsPage.routeName);
+        if (mounted) {
+          Navigator.of(context)
+              .pushReplacementNamed(TransactionsPage.routeName);
+        }
       } else {}
     }
   }
