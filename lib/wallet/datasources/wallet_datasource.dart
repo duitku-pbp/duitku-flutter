@@ -5,6 +5,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:duitku/common/constants.dart';
 import 'package:duitku/common/exceptions.dart';
 import 'package:duitku/wallet/messages/create_transaction_request.dart';
+import 'package:duitku/wallet/messages/create_wallet_request.dart';
 import 'package:duitku/wallet/messages/get_report_response.dart';
 import 'package:duitku/wallet/messages/get_transactions_response.dart';
 import 'package:duitku/wallet/messages/get_wallet_response.dart';
@@ -100,6 +101,29 @@ class WalletDatasource {
     }
 
     throw HttpException();
+  }
+
+  Future<void> createWallet({
+    required CreateWalletRequest body,
+  }) async {
+    await _setCsrfToken();
+
+    final uri = Uri.parse("$baseUrl/wallet/api/create/");
+    final cookies = await jar.loadForRequest(uri);
+    final csrfToken = await _getCsrfToken();
+    final cookieStr = cookies.join(" ").replaceAll(" HttpOnly", "");
+
+    final res = await client.post(
+      uri,
+      body: json.encode(body.toJson()),
+      headers: {"Cookie": cookieStr, "X-CSRFTOKEN": csrfToken},
+    );
+
+    if (res.statusCode == 302) {
+      return;
+    }
+
+    throw HttpException("Failed to create wallet");
   }
 
   Future<void> createTransaction({
