@@ -74,88 +74,105 @@ class _TransactionsPageState extends State<TransactionsPage> {
               padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 17),
               child: Stack(
                 children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 120),
-                        ...walletProv!.transactionGroups.map(
-                          (group) => Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  walletProv!.wallets.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              SizedBox(height: 120),
+                              Text("You haven't made any transactions yet"),
+                            ],
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
                             children: [
-                              const SizedBox(height: 40),
-                              Text(
-                                dateFormatter.format(
-                                  group.date,
-                                ),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              ...group.transactions
-                                  .asMap()
-                                  .map(
-                                    (i, trx) => MapEntry(
-                                      i,
-                                      Container(
-                                        padding: const EdgeInsets.all(0),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.black,
-                                          ),
-                                          borderRadius: i == 0
-                                              ? const BorderRadius.only(
-                                                  topLeft: Radius.circular(5),
-                                                  topRight: Radius.circular(5),
-                                                )
-                                              : i ==
-                                                      group.transactions
-                                                              .length -
-                                                          1
-                                                  ? const BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(5),
-                                                      bottomRight:
-                                                          Radius.circular(5),
-                                                    )
-                                                  : BorderRadius.circular(0),
-                                        ),
-                                        child: ListTile(
-                                          title: Text(
-                                            trx.description,
-                                            style:
-                                                const TextStyle(fontSize: 18),
-                                          ),
-                                          subtitle: _walletId != "all"
-                                              ? null
-                                              : Text(
-                                                  trx.wallet.name,
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                          trailing: Text(
-                                            "Rp. ${trx.type == TransactionType.income ? "+" : "-"}${trx.amount}",
-                                            style: TextStyle(
-                                              color: trx.type ==
-                                                      TransactionType.income
-                                                  ? Colors.green
-                                                  : Colors.red,
-                                            ),
-                                          ),
-                                        ),
+                              const SizedBox(height: 120),
+                              ...walletProv!.transactionGroups.map(
+                                (group) => Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 40),
+                                    Text(
+                                      dateFormatter.format(
+                                        group.date,
+                                      ),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22,
                                       ),
                                     ),
-                                  )
-                                  .values
+                                    const SizedBox(height: 16),
+                                    ...group.transactions
+                                        .asMap()
+                                        .map(
+                                          (i, trx) => MapEntry(
+                                            i,
+                                            Container(
+                                              padding: const EdgeInsets.all(0),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.black,
+                                                ),
+                                                borderRadius: i == 0
+                                                    ? const BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(5),
+                                                        topRight:
+                                                            Radius.circular(5),
+                                                      )
+                                                    : i ==
+                                                            group.transactions
+                                                                    .length -
+                                                                1
+                                                        ? const BorderRadius
+                                                            .only(
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    5),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    5),
+                                                          )
+                                                        : BorderRadius.circular(
+                                                            0),
+                                              ),
+                                              child: ListTile(
+                                                title: Text(
+                                                  trx.description,
+                                                  style: const TextStyle(
+                                                      fontSize: 18),
+                                                ),
+                                                subtitle: _walletId != "all"
+                                                    ? null
+                                                    : Text(
+                                                        trx.wallet.name,
+                                                        style: const TextStyle(
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                trailing: Text(
+                                                  "Rp. ${trx.type == TransactionType.income ? "+" : "-"}${trx.amount}",
+                                                  style: TextStyle(
+                                                    color: trx.type ==
+                                                            TransactionType
+                                                                .income
+                                                        ? Colors.green
+                                                        : Colors.red,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                        .values
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
                   Positioned(
                     top: walletProv!.transactionGroups.isEmpty ? null : 0,
                     left: walletProv!.transactionGroups.isEmpty ? null : 0,
@@ -167,6 +184,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                       ),
                       padding: const EdgeInsets.only(bottom: 15),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           const Center(
                             child: Text(
