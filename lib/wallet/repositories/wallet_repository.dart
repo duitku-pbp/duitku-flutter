@@ -3,6 +3,7 @@ import 'package:duitku/common/exceptions.dart';
 import 'package:duitku/common/failures.dart';
 import 'package:duitku/wallet/datasources/wallet_datasource.dart';
 import 'package:duitku/wallet/messages/create_transaction_request.dart';
+import 'package:duitku/wallet/messages/create_wallet_request.dart';
 import 'package:duitku/wallet/models/report.dart';
 import 'package:duitku/wallet/models/transaction_group.dart';
 import 'package:duitku/wallet/models/wallet.dart';
@@ -38,6 +39,17 @@ class WalletRepository {
       return Right(res);
     } on HttpException {
       return Left(HttpFailure("An error occured"));
+    }
+  }
+
+  Future<Either<Failure, void>> createWallet({
+    required CreateWalletRequest body,
+  }) async {
+    try {
+      final res = await datasource.createWallet(body: body);
+      return Right(res);
+    } on HttpException catch (err) {
+      return Left(HttpFailure(err.message));
     }
   }
 

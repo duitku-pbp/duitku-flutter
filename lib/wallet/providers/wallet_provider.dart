@@ -1,9 +1,11 @@
 import 'package:duitku/wallet/messages/create_transaction_request.dart';
+import 'package:duitku/wallet/messages/create_wallet_request.dart';
 import 'package:duitku/wallet/models/report.dart';
 import 'package:duitku/wallet/models/transaction_group.dart';
 import 'package:duitku/wallet/models/wallet.dart';
 import 'package:duitku/wallet/repositories/wallet_repository.dart';
 import 'package:duitku/wallet/states/create_transaction_state.dart';
+import 'package:duitku/wallet/states/create_wallet_state.dart';
 import 'package:flutter/foundation.dart';
 
 class WalletProvider with ChangeNotifier {
@@ -13,6 +15,7 @@ class WalletProvider with ChangeNotifier {
   Report? _report;
   List<TransactionGroup> _transactionGroups = [];
 
+  CreateWalletState _createWalletState = CreateWalletInitialState();
   CreateTransactionState _createTransactionState =
       CreateTransactionInitialState();
 
@@ -22,9 +25,11 @@ class WalletProvider with ChangeNotifier {
   Report? get report => _report;
   List<TransactionGroup> get transactionGroups => _transactionGroups;
 
+  CreateWalletState get createWalletState => _createWalletState;
   CreateTransactionState get createTransactionState => _createTransactionState;
 
   void resetStates() {
+    _createWalletState = CreateWalletInitialState();
     _createTransactionState = CreateTransactionInitialState();
 
     notifyListeners();
@@ -57,6 +62,19 @@ class WalletProvider with ChangeNotifier {
     res.fold(
       (failure) {},
       (trxGroups) => _transactionGroups = trxGroups,
+    );
+
+    notifyListeners();
+  }
+
+  Future<void> createWallet({
+    required CreateWalletRequest body,
+  }) async {
+    final res = await repository.createWallet(body: body);
+    res.fold(
+      (failure) =>
+          _createWalletState = CreateWalletFailureState(failure.message),
+      (ok) => _createWalletState = CreateWalletOkState(),
     );
 
     notifyListeners();
