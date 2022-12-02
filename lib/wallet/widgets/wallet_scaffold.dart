@@ -1,5 +1,6 @@
 import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:duitku/wallet/pages/create_transaction_page.dart';
+import 'package:duitku/wallet/pages/create_wallet_page.dart';
 import 'package:duitku/wallet/pages/transactions_page.dart';
 import 'package:duitku/wallet/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +99,9 @@ class _WalletScaffoldState extends State<WalletScaffold> {
     );
 
     if (_addItem == "Add Wallet") {
+      if (mounted) {
+        Navigator.of(context).pushNamed(CreateWalletPage.routeName);
+      }
     } else if (_addItem == "Add Transaction") {
       if (mounted) {
         Navigator.of(context).pushNamed(CreateTransactionPage.routeName);
