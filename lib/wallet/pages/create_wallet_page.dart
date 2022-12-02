@@ -1,5 +1,7 @@
 import 'package:duitku/wallet/messages/create_wallet_request.dart';
+import 'package:duitku/wallet/pages/wallet_home_page.dart';
 import 'package:duitku/wallet/providers/wallet_provider.dart';
+import 'package:duitku/wallet/states/create_wallet_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +36,32 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
         initialBalance: _initialBalance!,
         description: _description ?? "",
       );
+
+      await _walletProv?.createWallet(body: body);
+
+      if (_walletProv?.createWalletState is CreateWalletOkState) {
+        _walletProv?.resetStates();
+
+        if (mounted) {
+          Navigator.of(context).pushReplacementNamed(WalletHomePage.routeName);
+        }
+      } else {
+        final message =
+            _walletProv?.createWalletState is CreateWalletFailureState
+                ? (_walletProv?.createWalletState as CreateWalletFailureState)
+                    .message
+                : "An error occured";
+
+        final snackBar = SnackBar(
+          content: Text(message),
+          duration: const Duration(seconds: 3),
+        );
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      }
     }
   }
 
@@ -90,8 +118,8 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                   });
                                 },
                                 validator: (val) {
-                                  if (val == null || val.isEmpty) {
-                                    return "Please enter a description";
+                                  if (val == null || val.trim().isEmpty) {
+                                    return "Please enter a name for this wallet";
                                   }
                                   return null;
                                 },

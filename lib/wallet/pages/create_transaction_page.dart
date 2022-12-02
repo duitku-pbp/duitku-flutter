@@ -64,13 +64,14 @@ class _CreateTransactionPageState extends State<CreateTransactionPage> {
                 ? (walletProv?.createTransactionState
                         as CreateTransactionFailureState)
                     .message
-                : "Inital state";
+                : "An error occured";
         final snackBar = SnackBar(
           content: Text(message),
           duration: const Duration(seconds: 3),
         );
 
         if (mounted) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       }
