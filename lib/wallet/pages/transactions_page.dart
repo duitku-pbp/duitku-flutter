@@ -16,31 +16,24 @@ class TransactionsPage extends StatefulWidget {
 }
 
 class _TransactionsPageState extends State<TransactionsPage> {
-  final DateFormat dateFormatter = DateFormat("E, MMM dd, yyyy");
+  final DateFormat _dateFormatter = DateFormat("E, MMM dd, yyyy");
 
-  WalletProvider? walletProv;
-
-  Future<void>? _getTransactions;
-
-  Future<void> _init() async {
-    await walletProv?.getWallets();
-    await walletProv?.getTransactions(_walletId);
-
-    _getTransactions = walletProv?.getTransactions(_walletId);
-
-    _setTotalBalance();
-  }
+  WalletProvider? _walletProv;
 
   @override
   void initState() {
-    walletProv = Provider.of<WalletProvider>(context, listen: false);
-    _init();
+    _walletProv = context.read<WalletProvider>();
+
+    _walletProv?.getWallets();
+    _walletProv?.getTransactions(_walletId);
+
+    _setTotalBalance();
     super.initState();
   }
 
   void _setTotalBalance() {
     double total = 0;
-    final transactions = walletProv?.transactionGroups ?? [];
+    final transactions = _walletProv?.transactionGroups ?? [];
 
     for (TransactionGroup group in transactions) {
       for (Transaction trx in group.transactions) {
@@ -64,7 +57,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
       title: "Transactions",
       body: RefreshIndicator(
         child: FutureBuilder(
-          future: _getTransactions,
+          future: _walletProv?.getTransactions(_walletId),
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -74,7 +67,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
               padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 17),
               child: Stack(
                 children: [
-                  walletProv!.wallets.isEmpty
+                  _walletProv!.wallets.isEmpty
                       ? Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -88,14 +81,14 @@ class _TransactionsPageState extends State<TransactionsPage> {
                           child: Column(
                             children: [
                               const SizedBox(height: 120),
-                              ...walletProv!.transactionGroups.map(
+                              ..._walletProv!.transactionGroups.map(
                                 (group) => Column(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const SizedBox(height: 40),
                                     Text(
-                                      dateFormatter.format(
+                                      _dateFormatter.format(
                                         group.date,
                                       ),
                                       style: const TextStyle(
@@ -174,9 +167,9 @@ class _TransactionsPageState extends State<TransactionsPage> {
                           ),
                         ),
                   Positioned(
-                    top: walletProv!.transactionGroups.isEmpty ? null : 0,
-                    left: walletProv!.transactionGroups.isEmpty ? null : 0,
-                    right: walletProv!.transactionGroups.isEmpty ? null : 0,
+                    top: _walletProv!.transactionGroups.isEmpty ? null : 0,
+                    left: _walletProv!.transactionGroups.isEmpty ? null : 0,
+                    right: _walletProv!.transactionGroups.isEmpty ? null : 0,
                     child: Container(
                       decoration: const BoxDecoration(
                         color: Colors.white,
@@ -218,7 +211,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                     value: "all",
                                     child: Text("All Wallets"),
                                   ),
-                                  ...walletProv!.wallets
+                                  ..._walletProv!.wallets
                                       .map(
                                         (e) => DropdownMenuItem(
                                           value: e.id.toString(),
@@ -230,11 +223,9 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                 onChanged: (val) async {
                                   setState(() {
                                     _walletId = val!;
-                                    _getTransactions =
-                                        walletProv?.getTransactions(_walletId);
                                   });
 
-                                  await _getTransactions;
+                                  await _walletProv?.getTransactions(_walletId);
                                   _setTotalBalance();
                                 },
                               ),
@@ -250,7 +241,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
           },
         ),
         onRefresh: () async {
-          await walletProv?.getTransactions(_walletId);
+          await _walletProv?.getTransactions(_walletId);
           _setTotalBalance();
         },
       ),
