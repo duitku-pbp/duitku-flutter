@@ -1,6 +1,6 @@
 import 'package:duitku/wallet/data/models/transaction.dart';
 import 'package:duitku/wallet/data/models/transaction_group.dart';
-import 'package:duitku/wallet/presentation/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
 import 'package:duitku/wallet/presentation/widgets/wallet_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

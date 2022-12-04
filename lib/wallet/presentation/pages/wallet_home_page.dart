@@ -1,5 +1,5 @@
 import 'package:duitku/wallet/data/models/wallet.dart';
-import 'package:duitku/wallet/presentation/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
 import 'package:duitku/wallet/presentation/widgets/report_card.dart';
 import 'package:duitku/wallet/presentation/widgets/wallet_scaffold.dart';
 import 'package:duitku/wallet/presentation/widgets/wallet_tiles.dart';

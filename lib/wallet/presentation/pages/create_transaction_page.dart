@@ -1,8 +1,8 @@
 import 'package:duitku/wallet/data/messages/create_transaction_request.dart';
 import 'package:duitku/wallet/data/models/transaction.dart';
 import 'package:duitku/wallet/presentation/pages/transactions_page.dart';
-import 'package:duitku/wallet/presentation/providers/wallet_provider.dart';
-import 'package:duitku/wallet/presentation/states/create_transaction_state.dart';
+import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/bloc/states/create_transaction_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';

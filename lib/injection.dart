@@ -4,7 +4,7 @@ import 'package:duitku/auth/data/repositories/auth_repository.dart';
 import 'package:duitku/auth/presentation/providers/auth_provider.dart';
 import 'package:duitku/wallet/data/datasources/wallet_datasource.dart';
 import 'package:duitku/wallet/data/repositories/wallet_repository.dart';
-import 'package:duitku/wallet/presentation/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
