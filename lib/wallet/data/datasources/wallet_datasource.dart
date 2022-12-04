@@ -4,14 +4,14 @@ import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:duitku/common/constants.dart';
 import 'package:duitku/common/exceptions.dart';
-import 'package:duitku/wallet/messages/create_transaction_request.dart';
-import 'package:duitku/wallet/messages/create_wallet_request.dart';
-import 'package:duitku/wallet/messages/get_report_response.dart';
-import 'package:duitku/wallet/messages/get_transactions_response.dart';
-import 'package:duitku/wallet/messages/get_wallet_response.dart';
-import 'package:duitku/wallet/models/report.dart';
-import 'package:duitku/wallet/models/transaction_group.dart';
-import 'package:duitku/wallet/models/wallet.dart';
+import 'package:duitku/wallet/data/messages/create_transaction_request.dart';
+import 'package:duitku/wallet/data/messages/create_wallet_request.dart';
+import 'package:duitku/wallet/data/messages/get_report_response.dart';
+import 'package:duitku/wallet/data/messages/get_transactions_response.dart';
+import 'package:duitku/wallet/data/messages/get_wallet_response.dart';
+import 'package:duitku/wallet/data/models/report.dart';
+import 'package:duitku/wallet/data/models/transaction_group.dart';
+import 'package:duitku/wallet/data/models/wallet.dart';
 import 'package:http/http.dart' as http;
 
 class WalletDatasource {

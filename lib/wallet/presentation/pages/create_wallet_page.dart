@@ -1,7 +1,7 @@
-import 'package:duitku/wallet/messages/create_wallet_request.dart';
-import 'package:duitku/wallet/pages/wallet_home_page.dart';
-import 'package:duitku/wallet/providers/wallet_provider.dart';
-import 'package:duitku/wallet/states/create_wallet_state.dart';
+import 'package:duitku/wallet/data/messages/create_wallet_request.dart';
+import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
+import 'package:duitku/wallet/presentation/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/states/create_wallet_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,11 +1,11 @@
-import 'package:duitku/wallet/messages/create_transaction_request.dart';
-import 'package:duitku/wallet/messages/create_wallet_request.dart';
-import 'package:duitku/wallet/models/report.dart';
-import 'package:duitku/wallet/models/transaction_group.dart';
-import 'package:duitku/wallet/models/wallet.dart';
-import 'package:duitku/wallet/repositories/wallet_repository.dart';
-import 'package:duitku/wallet/states/create_transaction_state.dart';
-import 'package:duitku/wallet/states/create_wallet_state.dart';
+import 'package:duitku/wallet/data/messages/create_transaction_request.dart';
+import 'package:duitku/wallet/data/messages/create_wallet_request.dart';
+import 'package:duitku/wallet/data/models/report.dart';
+import 'package:duitku/wallet/data/models/transaction_group.dart';
+import 'package:duitku/wallet/data/models/wallet.dart';
+import 'package:duitku/wallet/data/repositories/wallet_repository.dart';
+import 'package:duitku/wallet/presentation/states/create_transaction_state.dart';
+import 'package:duitku/wallet/presentation/states/create_wallet_state.dart';
 import 'package:flutter/foundation.dart';
 
 class WalletProvider with ChangeNotifier {

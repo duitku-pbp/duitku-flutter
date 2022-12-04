@@ -1,4 +1,4 @@
-import 'package:duitku/wallet/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/providers/wallet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';

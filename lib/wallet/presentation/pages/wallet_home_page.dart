@@ -1,8 +1,8 @@
-import 'package:duitku/wallet/models/wallet.dart';
-import 'package:duitku/wallet/providers/wallet_provider.dart';
-import 'package:duitku/wallet/widgets/report_card.dart';
-import 'package:duitku/wallet/widgets/wallet_scaffold.dart';
-import 'package:duitku/wallet/widgets/wallet_tiles.dart';
+import 'package:duitku/wallet/data/models/wallet.dart';
+import 'package:duitku/wallet/presentation/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/widgets/report_card.dart';
+import 'package:duitku/wallet/presentation/widgets/wallet_scaffold.dart';
+import 'package:duitku/wallet/presentation/widgets/wallet_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

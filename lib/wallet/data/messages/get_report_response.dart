@@ -1,4 +1,4 @@
-import 'package:duitku/wallet/models/report.dart';
+import 'package:duitku/wallet/data/models/report.dart';
 
 class GetReportResponse {
   final Report report;

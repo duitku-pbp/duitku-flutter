@@ -1,4 +1,4 @@
-import 'package:duitku/wallet/models/transaction.dart';
+import 'package:duitku/wallet/data/models/transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionGroup {

@@ -1,4 +1,4 @@
-import 'package:duitku/wallet/models/wallet.dart';
+import 'package:duitku/wallet/data/models/wallet.dart';
 import 'package:intl/intl.dart';
 
 enum TransactionType {

@@ -1,4 +1,4 @@
-import 'package:duitku/wallet/models/transaction_group.dart';
+import 'package:duitku/wallet/data/models/transaction_group.dart';
 
 class GetTransactionsResponse {
   final List<TransactionGroup> transactionGroups;

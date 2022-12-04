@@ -1,8 +1,8 @@
 import 'package:duitku/common/widgets/app_drawer.dart';
-import 'package:duitku/wallet/pages/create_transaction_page.dart';
-import 'package:duitku/wallet/pages/create_wallet_page.dart';
-import 'package:duitku/wallet/pages/transactions_page.dart';
-import 'package:duitku/wallet/pages/wallet_home_page.dart';
+import 'package:duitku/wallet/presentation/pages/create_transaction_page.dart';
+import 'package:duitku/wallet/presentation/pages/create_wallet_page.dart';
+import 'package:duitku/wallet/presentation/pages/transactions_page.dart';
+import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 
 class WalletScaffold extends StatefulWidget {
