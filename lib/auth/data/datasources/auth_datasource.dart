@@ -56,12 +56,14 @@ class AuthDatasource {
     final res = await client.send(req);
 
     if (res.statusCode == 302) {
-      final sessionId =
-          res.headers["set-cookie"]?.split("sessionid=")[1].split(";")[0];
+      final location = res.headers["location"]!;
 
-      if (sessionId == null || sessionId.isEmpty) {
+      if (location == "/authentication/login/") {
         throw HttpException("Failed to login");
       }
+
+      final sessionId =
+          res.headers["set-cookie"]!.split("sessionid=")[1].split(";")[0];
 
       await jar.saveFromResponse(
         Uri.parse(baseUrl),
