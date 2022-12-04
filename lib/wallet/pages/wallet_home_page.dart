@@ -1,3 +1,4 @@
+import 'package:duitku/wallet/models/wallet.dart';
 import 'package:duitku/wallet/providers/wallet_provider.dart';
 import 'package:duitku/wallet/widgets/report_card.dart';
 import 'package:duitku/wallet/widgets/wallet_scaffold.dart';
@@ -15,29 +16,26 @@ class WalletHomePage extends StatefulWidget {
 }
 
 class _WalletHomePageState extends State<WalletHomePage> {
-  Future<void>? _getWallets;
-  WalletProvider? walletProv;
+  WalletProvider? _walletProv;
+
   double _total = 0;
 
   @override
   void initState() {
-    walletProv = Provider.of<WalletProvider>(context, listen: false);
-    _init();
+    _walletProv = Provider.of<WalletProvider>(context, listen: false);
+    _walletProv?.getWallets();
+
+    _setTotalBalance();
     super.initState();
   }
 
-  void _init() async {
-    await walletProv?.getWallets();
+  void _setTotalBalance() {
+    double total = 0;
+    final wallets = _walletProv?.wallets ?? [];
 
-    final wallets = walletProv?.wallets;
-    if (wallets == null || wallets.isEmpty) {
-      return;
+    for (Wallet wallet in wallets) {
+      total += wallet.balance;
     }
-
-    final total = wallets.reduce((total, wallet) {
-      total.balance += wallet.balance;
-      return total;
-    }).balance;
 
     setState(() {
       _total = total;
@@ -51,7 +49,7 @@ class _WalletHomePageState extends State<WalletHomePage> {
       title: "My Wallets",
       body: RefreshIndicator(
         child: FutureBuilder(
-          future: _getWallets ?? walletProv!.getWallets(),
+          future: _walletProv?.getWallets(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -90,21 +88,16 @@ class _WalletHomePageState extends State<WalletHomePage> {
                       textAlign: TextAlign.left,
                     ),
                     const SizedBox(height: 18),
-                    WalletTiles(wallets: walletProv?.wallets ?? []),
+                    WalletTiles(wallets: _walletProv?.wallets ?? []),
                   ],
                 ),
               ),
             );
           },
         ),
-        onRefresh: () {
-          setState(() {
-            _getWallets = walletProv?.getWallets();
-          });
-
-          _init();
-
-          return _getWallets ?? walletProv!.getWallets();
+        onRefresh: () async {
+          await _walletProv?.getWallets();
+          _setTotalBalance();
         },
       ),
     );
