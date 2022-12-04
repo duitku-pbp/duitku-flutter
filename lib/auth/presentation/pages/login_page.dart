@@ -1,4 +1,5 @@
-import 'package:duitku/auth/providers/auth_provider.dart';
+import 'package:duitku/auth/data/messages/login_request.dart';
+import 'package:duitku/auth/presentation/providers/auth_provider.dart';
 import 'package:duitku/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,12 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      await authProv?.login(username: _username!, password: _password!);
+      final body = LoginRequest(
+        username: _username!,
+        password: _password!,
+      );
+
+      await authProv?.login(body: body);
 
       if (mounted && authProv != null && authProv!.isAuthenticated) {
         Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
