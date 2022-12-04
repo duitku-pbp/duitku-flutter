@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
-                    "Login",
+                    "Duitku",
                     style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -71,6 +71,8 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               labelText: "Username",
                               hintText: "Enter your username",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(6),
                               ),
@@ -97,6 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               labelText: "Password",
                               hintText: "Enter your password",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(6),
                               ),
