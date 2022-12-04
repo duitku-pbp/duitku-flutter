@@ -1,6 +1,6 @@
 import 'package:duitku/auth/data/messages/login_request.dart';
-import 'package:duitku/auth/presentation/providers/auth_provider.dart';
-import 'package:duitku/auth/presentation/states/login_state.dart';
+import 'package:duitku/auth/presentation/bloc/providers/auth_provider.dart';
+import 'package:duitku/auth/presentation/bloc/states/login_state.dart';
 import 'package:duitku/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

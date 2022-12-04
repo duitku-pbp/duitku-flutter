@@ -1,5 +1,5 @@
 import 'package:duitku/auth/presentation/pages/login_page.dart';
-import 'package:duitku/auth/presentation/providers/auth_provider.dart';
+import 'package:duitku/auth/presentation/bloc/providers/auth_provider.dart';
 import 'package:duitku/common/pages/unknown_page.dart';
 import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:duitku/wallet/presentation/pages/create_transaction_page.dart';

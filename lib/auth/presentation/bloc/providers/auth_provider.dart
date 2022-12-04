@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:duitku/auth/data/messages/login_request.dart';
 import 'package:duitku/auth/data/repositories/auth_repository.dart';
-import 'package:duitku/auth/presentation/states/login_state.dart';
+import 'package:duitku/auth/presentation/bloc/states/login_state.dart';
 import 'package:duitku/common/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';

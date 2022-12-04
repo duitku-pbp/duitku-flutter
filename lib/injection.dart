@@ -1,7 +1,7 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:duitku/auth/data/datasources/auth_datasource.dart';
 import 'package:duitku/auth/data/repositories/auth_repository.dart';
-import 'package:duitku/auth/presentation/providers/auth_provider.dart';
+import 'package:duitku/auth/presentation/bloc/providers/auth_provider.dart';
 import 'package:duitku/wallet/data/datasources/wallet_datasource.dart';
 import 'package:duitku/wallet/data/repositories/wallet_repository.dart';
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
