@@ -42,7 +42,7 @@ class AuthDatasource {
         .value;
   }
 
-  Future<void> login({required LoginRequest body}) async {
+  Future<String> login({required LoginRequest body}) async {
     await _setCsrfToken();
 
     final uri = Uri.parse("$baseUrl/authentication/login/");
@@ -68,7 +68,7 @@ class AuthDatasource {
         [Cookie("sessionid", sessionId)],
       );
       await prefs.setString("sessionid", sessionId);
-      return;
+      return sessionId;
     }
 
     throw HttpException("Failed to login");
