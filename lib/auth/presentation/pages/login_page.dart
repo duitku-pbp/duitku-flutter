@@ -1,5 +1,6 @@
 import 'package:duitku/auth/data/messages/login_request.dart';
 import 'package:duitku/auth/presentation/providers/auth_provider.dart';
+import 'package:duitku/auth/presentation/states/login_state.dart';
 import 'package:duitku/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,8 +38,25 @@ class _LoginPageState extends State<LoginPage> {
 
       await authProv?.login(body: body);
 
-      if (mounted && authProv != null && authProv!.isAuthenticated) {
-        Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
+      if (authProv?.loginState is LoginOkState) {
+        authProv?.resetStates();
+
+        if (mounted) {
+          Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
+        }
+      } else if (authProv?.loginState is! LoginLoadingState) {
+        final message = authProv?.loginState is LoginFailureState
+            ? (authProv?.loginState as LoginFailureState).message
+            : "Failed to login";
+        final snackBar = SnackBar(
+          content: Text(message),
+          duration: const Duration(seconds: 3),
+        );
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       }
     }
   }

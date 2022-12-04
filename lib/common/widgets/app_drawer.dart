@@ -1,5 +1,5 @@
-import 'package:duitku/auth/pages/login_page.dart';
-import 'package:duitku/auth/providers/auth_provider.dart';
+import 'package:duitku/auth/presentation/pages/login_page.dart';
+import 'package:duitku/auth/presentation/providers/auth_provider.dart';
 import 'package:duitku/main.dart';
 import 'package:duitku/wallet/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';

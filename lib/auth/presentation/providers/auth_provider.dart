@@ -42,7 +42,16 @@ class AuthProvider with ChangeNotifier {
     await jar.saveFromResponse(uri, [Cookie("csrftoken", csrfToken ?? "")]);
   }
 
+  void resetStates() {
+    _loginState = LoginInitialState();
+
+    notifyListeners();
+  }
+
   Future<void> login({required LoginRequest body}) async {
+    _loginState = LoginLoadingState();
+    notifyListeners();
+
     final res = await repository.login(body: body);
     res.fold(
       (failure) => _loginState = LoginFailureState(failure.message),
