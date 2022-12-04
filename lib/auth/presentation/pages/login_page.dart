@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    authProv = Provider.of<AuthProvider>(context, listen: false);
+    authProv = context.read<AuthProvider>();
     super.initState();
   }
 
@@ -151,21 +151,25 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 20),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: _login,
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 16,
+                              Provider.of<AuthProvider>(context).loginState
+                                      is LoginLoadingState
+                                  ? const CircularProgressIndicator()
+                                  : Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: _login,
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 16,
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          "Submit",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  child: const Text(
-                                    "Submit",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                           const SizedBox(height: 20),
