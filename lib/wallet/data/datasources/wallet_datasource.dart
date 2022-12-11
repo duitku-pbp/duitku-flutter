@@ -8,6 +8,7 @@ import 'package:duitku/wallet/data/messages/create_transaction_request.dart';
 import 'package:duitku/wallet/data/messages/create_wallet_request.dart';
 import 'package:duitku/wallet/data/messages/get_report_response.dart';
 import 'package:duitku/wallet/data/messages/get_transactions_response.dart';
+import 'package:duitku/wallet/data/messages/get_wallet_detail_response.dart';
 import 'package:duitku/wallet/data/messages/get_wallet_response.dart';
 import 'package:duitku/wallet/data/models/report.dart';
 import 'package:duitku/wallet/data/models/transaction_group.dart';
@@ -62,6 +63,20 @@ class WalletDatasource {
     }
 
     throw HttpException();
+  }
+
+  Future<Wallet> getWalletDetail(int walletId) async {
+    final uri = Uri.parse("$baseUrl/wallet/api/$walletId/");
+    final cookies = await jar.loadForRequest(uri);
+    final sessionId = cookies.where((c) => c.name == "sessionid").join();
+
+    final res = await client.get(uri, headers: {"Cookie": sessionId});
+
+    if (res.statusCode == 200) {
+      return GetWalletDetailResponse.fromJson(json.decode(res.body)).wallet;
+    }
+
+    throw HttpException("Failed to get wallet");
   }
 
   Future<Report> getReport(String period) async {

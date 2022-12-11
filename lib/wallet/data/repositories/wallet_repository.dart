@@ -22,6 +22,15 @@ class WalletRepository {
     }
   }
 
+  Future<Either<Failure, Wallet>> getWalletDetail(int walletId) async {
+    try {
+      final res = await datasource.getWalletDetail(walletId);
+      return Right(res);
+    } on HttpException catch (err) {
+      return Left(HttpFailure(err.message));
+    }
+  }
+
   Future<Either<Failure, Report>> getReport(String period) async {
     try {
       final res = await datasource.getReport(period);
