@@ -12,6 +12,7 @@ class WalletProvider with ChangeNotifier {
   final WalletRepository repository;
 
   List<Wallet> _wallets = [];
+  Wallet? _wallet;
   Report? _report;
   List<TransactionGroup> _transactionGroups = [];
 
@@ -22,6 +23,7 @@ class WalletProvider with ChangeNotifier {
   WalletProvider({required this.repository});
 
   List<Wallet> get wallets => _wallets;
+  Wallet? get wallet => _wallet;
   Report? get report => _report;
   List<TransactionGroup> get transactionGroups => _transactionGroups;
 
@@ -42,6 +44,21 @@ class WalletProvider with ChangeNotifier {
       (wallets) => _wallets = [...wallets],
     );
 
+    notifyListeners();
+  }
+
+  Future<void> getWalletDetail(int walletId) async {
+    final res = await repository.getWalletDetail(walletId);
+    res.fold(
+      (failure) {},
+      (wallet) => _wallet = wallet,
+    );
+
+    notifyListeners();
+  }
+
+  void resetWalletDetail() {
+    _wallet = null;
     notifyListeners();
   }
 
