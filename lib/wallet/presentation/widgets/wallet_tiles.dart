@@ -1,5 +1,8 @@
 import 'package:duitku/wallet/data/models/wallet.dart';
+import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/pages/wallet_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WalletTiles extends StatelessWidget {
   final List<Wallet> wallets;
@@ -31,6 +34,16 @@ class WalletTiles extends StatelessWidget {
                     : BorderRadius.circular(0),
           ),
           child: ListTile(
+            onTap: ([bool mounted = true]) async {
+              await Navigator.of(context).pushNamed(
+                WalletDetailPage.routeName,
+                arguments: wallets[i].id,
+              );
+
+              if (mounted) {
+                await context.read<WalletProvider>().getWallets();
+              }
+            },
             title: Text(
               wallets[i].name,
               style: const TextStyle(fontSize: 18),
