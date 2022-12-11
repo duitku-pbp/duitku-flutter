@@ -6,6 +6,7 @@ import 'package:duitku/wallet/data/models/wallet.dart';
 import 'package:duitku/wallet/data/repositories/wallet_repository.dart';
 import 'package:duitku/wallet/presentation/bloc/states/create_transaction_state.dart';
 import 'package:duitku/wallet/presentation/bloc/states/create_wallet_state.dart';
+import 'package:duitku/wallet/presentation/bloc/states/delete_wallet_state.dart';
 import 'package:flutter/foundation.dart';
 
 class WalletProvider with ChangeNotifier {
@@ -19,6 +20,7 @@ class WalletProvider with ChangeNotifier {
   CreateWalletState _createWalletState = CreateWalletInitialState();
   CreateTransactionState _createTransactionState =
       CreateTransactionInitialState();
+  DeleteWalletState _deleteWalletState = DeleteWalletInitialState();
 
   WalletProvider({required this.repository});
 
@@ -29,10 +31,12 @@ class WalletProvider with ChangeNotifier {
 
   CreateWalletState get createWalletState => _createWalletState;
   CreateTransactionState get createTransactionState => _createTransactionState;
+  DeleteWalletState get deleteWalletState => _deleteWalletState;
 
   void resetStates() {
     _createWalletState = CreateWalletInitialState();
     _createTransactionState = CreateTransactionInitialState();
+    _deleteWalletState = DeleteWalletInitialState();
 
     notifyListeners();
   }
@@ -59,6 +63,17 @@ class WalletProvider with ChangeNotifier {
 
   void resetWalletDetail() {
     _wallet = null;
+  }
+
+  Future<void> deleteWallet(int walletId) async {
+    final res = await repository.deleteWallet(walletId);
+    res.fold(
+      (failure) =>
+          _deleteWalletState = DeleteWalletFailureState(failure.message),
+      (ok) => _deleteWalletState = DeleteWalletOkState(),
+    );
+
+    notifyListeners();
   }
 
   Future<void> getReport(String period) async {
