@@ -79,6 +79,25 @@ class WalletDatasource {
     throw HttpException("Failed to get wallet");
   }
 
+  Future<void> deleteWallet(int walletId) async {
+    await _setCsrfToken();
+    final uri = Uri.parse("$baseUrl/wallet/api/$walletId/");
+    final cookies = await jar.loadForRequest(uri);
+    final csrfToken = await _getCsrfToken();
+    final cookieStr = cookies.join(" ").replaceAll(" HttpOnly", "");
+
+    final res = await client.delete(
+      uri,
+      headers: {"Cookie": cookieStr, "X-CSRFTOKEN": csrfToken},
+    );
+
+    if (res.statusCode == 302) {
+      return;
+    }
+
+    throw HttpException("Failed to delete wallet");
+  }
+
   Future<Report> getReport(String period) async {
     final uri = Uri.parse("$baseUrl/wallet/api/report/$period");
     final cookies = await jar.loadForRequest(uri);
