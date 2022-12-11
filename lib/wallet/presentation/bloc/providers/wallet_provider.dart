@@ -121,7 +121,7 @@ class WalletProvider with ChangeNotifier {
   }
 
   Future<void> deleteTransaction(int transactionId) async {
-    final res = await repository.deleteWallet(transactionId);
+    final res = await repository.deleteTransaction(transactionId);
     res.fold(
       (failure) => _deleteTransactionState =
           DeleteTransactionFailureState(failure.message),

@@ -1,5 +1,7 @@
 import 'package:duitku/wallet/data/models/transaction.dart';
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/bloc/states/delete_transaction_state.dart';
+import 'package:duitku/wallet/presentation/pages/transactions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +40,34 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
     super.didChangeDependencies();
   }
 
-  Future<void> _deleteTransaction() async {}
+  Future<void> _deleteTransaction() async {
+    await _walletProv?.deleteTransaction(_transactionId);
+
+    if (_walletProv?.deleteTransactionState is DeleteTransactionOkState) {
+      _walletProv?.resetStates();
+
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed(TransactionsPage.routeName);
+      }
+    } else {
+      final message =
+          _walletProv?.deleteTransactionState is DeleteTransactionFailureState
+              ? (_walletProv?.deleteTransactionState
+                      as DeleteTransactionFailureState)
+                  .message
+              : "Failed to delete transaction";
+      final snackBar = SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.of(context).pop();
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
