@@ -7,6 +7,7 @@ import 'package:duitku/wallet/data/models/wallet.dart';
 import 'package:duitku/wallet/data/repositories/wallet_repository.dart';
 import 'package:duitku/wallet/presentation/bloc/states/create_transaction_state.dart';
 import 'package:duitku/wallet/presentation/bloc/states/create_wallet_state.dart';
+import 'package:duitku/wallet/presentation/bloc/states/delete_transaction_state.dart';
 import 'package:duitku/wallet/presentation/bloc/states/delete_wallet_state.dart';
 import 'package:flutter/foundation.dart';
 
@@ -23,6 +24,8 @@ class WalletProvider with ChangeNotifier {
   CreateTransactionState _createTransactionState =
       CreateTransactionInitialState();
   DeleteWalletState _deleteWalletState = DeleteWalletInitialState();
+  DeleteTransactionState _deleteTransactionState =
+      DeleteTransactionInitialState();
 
   WalletProvider({required this.repository});
 
@@ -35,11 +38,13 @@ class WalletProvider with ChangeNotifier {
   CreateWalletState get createWalletState => _createWalletState;
   CreateTransactionState get createTransactionState => _createTransactionState;
   DeleteWalletState get deleteWalletState => _deleteWalletState;
+  DeleteTransactionState get deleteTransactionState => _deleteTransactionState;
 
   void resetStates() {
     _createWalletState = CreateWalletInitialState();
     _createTransactionState = CreateTransactionInitialState();
     _deleteWalletState = DeleteWalletInitialState();
+    _deleteTransactionState = DeleteTransactionInitialState();
 
     notifyListeners();
   }
@@ -113,6 +118,17 @@ class WalletProvider with ChangeNotifier {
 
   void resetTransactionDetail() {
     _transaction = null;
+  }
+
+  Future<void> deleteTransaction(int transactionId) async {
+    final res = await repository.deleteWallet(transactionId);
+    res.fold(
+      (failure) => _deleteTransactionState =
+          DeleteTransactionFailureState(failure.message),
+      (ok) => _deleteTransactionState = DeleteTransactionOkState(),
+    );
+
+    notifyListeners();
   }
 
   Future<void> createWallet({

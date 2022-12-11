@@ -42,6 +42,8 @@ class _WalletDetailPageState extends State<WalletDetailPage> {
     await _walletProv?.deleteWallet(_walletId);
 
     if (_walletProv?.deleteWalletState is DeleteWalletOkState) {
+      _walletProv?.resetStates();
+
       if (mounted) {
         Navigator.of(context).pushReplacementNamed(WalletHomePage.routeName);
       }

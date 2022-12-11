@@ -72,6 +72,15 @@ class WalletRepository {
     }
   }
 
+  Future<Either<Failure, void>> deleteTransaction(int transactionId) async {
+    try {
+      final res = await datasource.deleteTransaction(transactionId);
+      return Right(res);
+    } on HttpException catch (err) {
+      return Left(HttpFailure(err.message));
+    }
+  }
+
   Future<Either<Failure, void>> createWallet({
     required CreateWalletRequest body,
   }) async {
