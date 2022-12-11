@@ -4,6 +4,7 @@ import 'package:duitku/main.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:duitku/common/pages/news_show_page.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
@@ -100,6 +101,13 @@ class _AppDrawerState extends State<AppDrawer> {
               } else {
                 _login(context);
               }
+            },
+          ),
+          ListTile(
+            title: const Text("News", style: TextStyle(fontSize: 16)),
+            leading: const Icon(Icons.newspaper),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(NewsPage.routeName);
             },
           )
         ],

@@ -9,6 +9,7 @@ import 'package:duitku/wallet/presentation/pages/transactions_page.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_detail_page.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
+import 'package:duitku/common/pages/news_show_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -59,6 +60,7 @@ class DuitkuApp extends StatelessWidget {
           CreateTransactionPage.routeName: (context) =>
               const CreateTransactionPage(),
           CreateWalletPage.routeName: (context) => const CreateWalletPage(),
+          NewsPage.routeName:(context) => const NewsPage(),
         },
         onUnknownRoute: (settings) => MaterialPageRoute(
           builder: (context) => const UnknownPage(),
