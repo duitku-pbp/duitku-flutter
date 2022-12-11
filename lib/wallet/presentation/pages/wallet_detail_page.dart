@@ -1,4 +1,6 @@
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/bloc/states/delete_wallet_state.dart';
+import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +38,29 @@ class _WalletDetailPageState extends State<WalletDetailPage> {
     super.didChangeDependencies();
   }
 
+  Future<void> _deleteWallet() async {
+    await _walletProv?.deleteWallet(_walletId);
+
+    if (_walletProv?.deleteWalletState is DeleteWalletOkState) {
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed(WalletHomePage.routeName);
+      }
+    } else {
+      final message = _walletProv?.deleteWalletState is DeleteWalletFailureState
+          ? (_walletProv?.deleteWalletState as DeleteWalletFailureState).message
+          : "Failed to delete wallet";
+      final snackBar = SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,14 +80,14 @@ class _WalletDetailPageState extends State<WalletDetailPage> {
                   titlePadding: const EdgeInsets.symmetric(vertical: 18),
                   contentPadding: const EdgeInsets.all(12),
                   content: SizedBox(
-                    height: 120,
+                    height: 105,
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Center(
+                          const Center(
                             child: Text(
-                              "Are you sure you want to delete your ${_walletProv!.wallet!.name} wallet?",
+                              "Are you sure you want to delete this wallet?",
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -70,15 +95,20 @@ class _WalletDetailPageState extends State<WalletDetailPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text("No"),
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("No"),
+                                ),
                               ),
-                              ElevatedButton(
-                                onPressed: () async {},
-                                child: const Text("Yes"),
+                              const SizedBox(width: 15),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: _deleteWallet,
+                                  child: const Text("Yes"),
+                                ),
                               ),
                             ],
                           ),
