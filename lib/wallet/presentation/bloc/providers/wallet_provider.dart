@@ -59,7 +59,6 @@ class WalletProvider with ChangeNotifier {
 
   void resetWalletDetail() {
     _wallet = null;
-    notifyListeners();
   }
 
   Future<void> getReport(String period) async {
