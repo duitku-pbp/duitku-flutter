@@ -7,10 +7,12 @@ import 'package:duitku/common/exceptions.dart';
 import 'package:duitku/wallet/data/messages/create_transaction_request.dart';
 import 'package:duitku/wallet/data/messages/create_wallet_request.dart';
 import 'package:duitku/wallet/data/messages/get_report_response.dart';
+import 'package:duitku/wallet/data/messages/get_transaction_detail_response.dart';
 import 'package:duitku/wallet/data/messages/get_transactions_response.dart';
 import 'package:duitku/wallet/data/messages/get_wallet_detail_response.dart';
 import 'package:duitku/wallet/data/messages/get_wallet_response.dart';
 import 'package:duitku/wallet/data/models/report.dart';
+import 'package:duitku/wallet/data/models/transaction.dart';
 import 'package:duitku/wallet/data/models/transaction_group.dart';
 import 'package:duitku/wallet/data/models/wallet.dart';
 import 'package:http/http.dart' as http;
@@ -135,6 +137,22 @@ class WalletDatasource {
     }
 
     throw HttpException();
+  }
+
+  Future<Transaction> getTransactionDetail(int transactionId) async {
+    final uri = Uri.parse("$baseUrl/wallet/api/transaction/$transactionId/");
+    final cookies = await jar.loadForRequest(uri);
+    final sessionId = cookies.where((c) => c.name == "sessionid").join();
+
+    final res = await client.get(uri, headers: {"Cookie": sessionId});
+
+    if (res.statusCode == 200) {
+      return GetTransactionDetailResponse.fromJson(
+        json.decode(res.body),
+      ).transaction;
+    }
+
+    throw HttpException("Failed to get wallet");
   }
 
   Future<void> createWallet({
