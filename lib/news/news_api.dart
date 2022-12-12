@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
+//import 'dart:html';
 import 'package:duitku/news/news_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,12 +15,6 @@ class NewsApi{
     });
 
     // untuk menandakan apakah API berhasil mengambil data atau tidak
-    if (response.statusCode == HttpStatus.ok) {
-      print('works');
-    } else {
-      // If that response was not OK, throw an error.
-      throw Exception('API call returned: ${response.statusCode} ${response.reasonPhrase}');
-    }
 
     Map data = jsonDecode(response.body);
     

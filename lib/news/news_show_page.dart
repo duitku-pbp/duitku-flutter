@@ -2,7 +2,7 @@ import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:duitku/news/news_page.dart';
 import 'package:duitku/news/news_api.dart';
-import 'dart:html' as html;
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsPage extends StatefulWidget{
   static const routeName = '/news';
@@ -55,7 +55,9 @@ class _NewsPageState extends State<NewsPage> {
               child: InkWell(
                 onTap: () {
                   //open links in new tab
-                  html.window.open(_news![index].shortURL, 'new tab');
+                  
+                  Uri urlParse = Uri.parse(_news![index].shortURL);
+                  launchUrl(urlParse);
                 },
                 
                 child: Container(
