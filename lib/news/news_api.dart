@@ -1,7 +1,6 @@
 import 'dart:convert';
 //import 'dart:html';
 import 'package:duitku/news/news_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 // class newsAPI -> disini adalah tempat untuk memanggil API dan parameter API ditulis
@@ -28,4 +27,3 @@ class NewsApi {
     return News.newsFromSnapshot(temp);
   }
 }
-
