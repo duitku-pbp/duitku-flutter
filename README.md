@@ -1,3 +1,8 @@
+[![Duitku CI](https://github.com/duitku-pbp/duitku-flutter/actions/workflows/ci.yml/badge.svg)](https://github.com/duitku-pbp/duitku-flutter/actions/workflows/ci.yml)
+[![Pre-Release](https://github.com/duitku-pbp/duitku-flutter/actions/workflows/pre-release.yml/badge.svg)](https://github.com/duitku-pbp/duitku-flutter/actions/workflows/pre-release.yml)
+[![Release](https://github.com/duitku-pbp/duitku-flutter/actions/workflows/release.yml/badge.svg)](https://github.com/duitku-pbp/duitku-flutter/actions/workflows/release.yml)
+[![Microsoft App Center Build](https://build.appcenter.ms/v0.1/apps/4ef76913-7ec9-4788-ba73-11243bbb3a53/branches/main/badge)](https://appcenter.ms)
+
 # duitku
 
 ## Members
