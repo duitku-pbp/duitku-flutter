@@ -48,7 +48,7 @@ class _NewsPageState extends State<NewsPage> {
         itemCount: _news!.length,
         itemBuilder: (context, index) {
           return Container (
-            margin: const EdgeInsets.only(left:100, right: 100, top: 10, bottom: 10),
+            margin: const EdgeInsets.only(left:20, right: 20, top: 10, bottom: 10),
             child: Material(
               color: Colors.black38,
               borderRadius: BorderRadius.circular(10),
@@ -86,16 +86,18 @@ class _NewsPageState extends State<NewsPage> {
                           
                         )
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                        Container(
-                          width: 600,
-                          margin: const EdgeInsets.only(bottom:2),
-                          child: Text(_news![index].title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                        ),
-                        Text(_news![index].resourceType),
-                      ],)
+                      Expanded(child:
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                      
+                            Container(
+                              
+                              margin: const EdgeInsets.only(bottom:2),
+                              child: Text(_news![index].title, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),),
+                          ),
+                          Text(_news![index].resourceType),
+                      ],))
                     ],
                   ),
                 ),
