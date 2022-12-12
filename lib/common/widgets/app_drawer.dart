@@ -5,6 +5,7 @@ import 'package:duitku/main.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:duitku/news/news_show_page.dart';
 import 'package:duitku/blog/presentation/pages/blog_page.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -88,16 +89,26 @@ class _AppDrawerState extends State<AppDrawer> {
               : const SizedBox(),
           authProv!.isAuthenticated
               ? ListTile(
-            title: const Text(
-              "Blogs",
-              style: TextStyle(fontSize: 16),
-            ),
-            leading: const Icon(Icons.public),
-            onTap: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const BlogPage()));
-            },
-          )
+                  title: const Text(
+                    "Blogs",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  leading: const Icon(Icons.public),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const BlogPage()));
+                  },
+                )
               : const SizedBox(),
+          ListTile(
+            title: const Text("News", style: TextStyle(fontSize: 16)),
+            leading: const Icon(Icons.newspaper),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(NewsPage.routeName);
+            },
+          ),
           const Divider(
             height: 3,
             color: Colors.grey,
@@ -135,7 +146,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 _login(context);
               }
             },
-          )
+          ),
         ],
       ),
     );
