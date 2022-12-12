@@ -7,6 +7,7 @@ import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
+import 'package:timeago/timeago.dart' as timeago;
 
 class BlogPage extends StatefulWidget {
   const BlogPage({super.key});
@@ -69,7 +70,7 @@ class _BlogPageState extends State<BlogPage> {
                                 ]),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -93,6 +94,17 @@ class _BlogPageState extends State<BlogPage> {
                                         fontSize: const FontSize(12.0),
                                       )
                                     }),
+                                Text(
+                                    "Posted ${timeago.format(snapshot.data![index].pubDate)}",
+                                    style: const TextStyle(
+                                        fontSize: 12.0, color: Colors.black)),
+                                const SizedBox(
+                                  height: 4.0,
+                                ),
+                                Text(
+                                    "${snapshot.data![index].getCommentAmount.toString()} comments",
+                                    style: const TextStyle(
+                                        fontSize: 10.0, color: Colors.grey)),
                               ],
                             ),
                           ),
