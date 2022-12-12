@@ -4,7 +4,9 @@ import 'package:duitku/common/pages/unknown_page.dart';
 import 'package:duitku/common/widgets/app_drawer.dart';
 import 'package:duitku/wallet/presentation/pages/create_transaction_page.dart';
 import 'package:duitku/wallet/presentation/pages/create_wallet_page.dart';
+import 'package:duitku/wallet/presentation/pages/transaction_detail_page.dart';
 import 'package:duitku/wallet/presentation/pages/transactions_page.dart';
+import 'package:duitku/wallet/presentation/pages/wallet_detail_page.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
 import 'package:duitku/investasiku/presentation/provider/investasiku_provider.dart';
@@ -53,7 +55,10 @@ class DuitkuApp extends StatelessWidget {
           MyHomePage.routeName: (context) => const MyHomePage(),
           LoginPage.routeName: (context) => const LoginPage(),
           WalletHomePage.routeName: (context) => const WalletHomePage(),
+          WalletDetailPage.routeName: (context) => const WalletDetailPage(),
           TransactionsPage.routeName: (context) => const TransactionsPage(),
+          TransactionDetailPage.routeName: (context) =>
+              const TransactionDetailPage(),
           CreateTransactionPage.routeName: (context) =>
               const CreateTransactionPage(),
           CreateWalletPage.routeName: (context) => const CreateWalletPage(),
