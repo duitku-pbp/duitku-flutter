@@ -1,5 +1,6 @@
 import 'package:duitku/auth/presentation/pages/login_page.dart';
 import 'package:duitku/auth/presentation/bloc/providers/auth_provider.dart';
+import 'package:duitku/donasi/presentation/pages/donasi_page.dart';
 import 'package:duitku/main.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,19 @@ class _AppDrawerState extends State<AppDrawer> {
                   onTap: () {
                     Navigator.of(context)
                         .pushReplacementNamed(WalletHomePage.routeName);
+                  },
+                )
+              : const SizedBox(),
+          authProv!.isAuthenticated
+              ? ListTile(
+                  title: const Text(
+                    "Donasi",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  leading: const Icon(Icons.money),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(DonasiHomePage.routeName);
                   },
                 )
               : const SizedBox(),
