@@ -2,6 +2,9 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:duitku/auth/data/datasources/auth_datasource.dart';
 import 'package:duitku/auth/data/repositories/auth_repository.dart';
 import 'package:duitku/auth/presentation/bloc/providers/auth_provider.dart';
+import 'package:duitku/donasi/data/datasources/donasi_datasource.dart';
+import 'package:duitku/donasi/data/repository/donasi_repository.dart';
+import 'package:duitku/donasi/presentation/bloc/providers/donasi_provider.dart';
 import 'package:duitku/wallet/data/datasources/wallet_datasource.dart';
 import 'package:duitku/wallet/data/repositories/wallet_repository.dart';
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
@@ -24,12 +27,16 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory<WalletProvider>(() => WalletProvider(repository: sl()));
-  sl.registerFactory<PortofolioProvider>(() =>PortofolioProvider(repository: sl()));
+  sl.registerFactory<DonasiProvider>(() => DonasiProvider(repository: sl()));
+  sl.registerFactory<PortofolioProvider>(
+      () => PortofolioProvider(repository: sl()));
 
   // Repositories
   sl.registerFactory<AuthRepository>(() => AuthRepository(datasource: sl()));
   sl.registerFactory<WalletRepository>(
       () => WalletRepository(datasource: sl()));
+  sl.registerFactory<DonasiRepository>(
+      () => DonasiRepository(datasource: sl()));
   sl.registerFactory<InvestasikuRepository>(
       () => InvestasikuRepository(datasource: sl()));
 
@@ -43,6 +50,12 @@ Future<void> init() async {
   );
   sl.registerFactory<WalletDatasource>(
     () => WalletDatasource(
+      client: sl(),
+      jar: sl(),
+    ),
+  );
+  sl.registerFactory<DonasiDatasource>(
+    () => DonasiDatasource(
       client: sl(),
       jar: sl(),
     ),

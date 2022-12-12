@@ -1,5 +1,6 @@
 import 'package:duitku/auth/presentation/pages/login_page.dart';
 import 'package:duitku/auth/presentation/bloc/providers/auth_provider.dart';
+import 'package:duitku/donasi/presentation/pages/donasi_page.dart';
 import 'package:duitku/investasiku/presentation/home_investasiku.dart';
 import 'package:duitku/main.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
@@ -109,10 +110,19 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.of(context).pushReplacementNamed(NewsPage.routeName);
             },
           ),
-          const Divider(
-            height: 3,
-            color: Colors.grey,
-          ),
+          authProv!.isAuthenticated
+              ? ListTile(
+                  title: const Text(
+                    "Donasi",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  leading: const Icon(Icons.money),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(DonasiHomePage.routeName);
+                  },
+                )
+              : const SizedBox(),
           authProv!.isAuthenticated
               ? ListTile(
                   title: const Text(
@@ -121,12 +131,12 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                   leading: const Icon(Icons.money),
                   onTap: () {
-                  // Route menu ke halaman utama
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeInvestasikuPage()),
-                  );
-                },
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeInvestasikuPage()),
+                    );
+                  },
                 )
               : const SizedBox(),
           const Divider(
