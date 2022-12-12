@@ -5,6 +5,9 @@ import 'package:duitku/auth/presentation/bloc/providers/auth_provider.dart';
 import 'package:duitku/wallet/data/datasources/wallet_datasource.dart';
 import 'package:duitku/wallet/data/repositories/wallet_repository.dart';
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
+import 'package:duitku/investasiku/data/datasources/investasiku_datasources.dart';
+import 'package:duitku/investasiku/data/repositories/investasiku_repositories.dart';
+import 'package:duitku/investasiku/presentation/provider/investasiku_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,11 +24,14 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory<WalletProvider>(() => WalletProvider(repository: sl()));
+  sl.registerFactory<PortofolioProvider>(() =>PortofolioProvider(repository: sl()));
 
   // Repositories
   sl.registerFactory<AuthRepository>(() => AuthRepository(datasource: sl()));
   sl.registerFactory<WalletRepository>(
       () => WalletRepository(datasource: sl()));
+  sl.registerFactory<InvestasikuRepository>(
+      () => InvestasikuRepository(datasource: sl()));
 
   // Datasources
   sl.registerFactory<AuthDatasource>(
@@ -37,6 +43,12 @@ Future<void> init() async {
   );
   sl.registerFactory<WalletDatasource>(
     () => WalletDatasource(
+      client: sl(),
+      jar: sl(),
+    ),
+  );
+  sl.registerFactory<PortofolioDataSources>(
+    () => PortofolioDataSources(
       client: sl(),
       jar: sl(),
     ),
