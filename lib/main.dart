@@ -9,6 +9,7 @@ import 'package:duitku/wallet/presentation/pages/transactions_page.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_detail_page.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
+import 'package:duitku/investasiku/presentation/provider/investasiku_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,7 @@ class DuitkuApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProv = di.sl<AuthProvider>();
     final walletProv = di.sl<WalletProvider>();
+    final portofolioProv = di.sl<PortofolioProvider>();
 
     authProv.init();
 
@@ -38,6 +40,7 @@ class DuitkuApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => authProv),
         ChangeNotifierProvider(create: (_) => walletProv),
+        ChangeNotifierProvider(create: (_) => portofolioProv),
       ],
       child: MaterialApp(
         title: 'Duitku',
