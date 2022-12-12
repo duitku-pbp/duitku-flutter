@@ -1,10 +1,13 @@
 import 'package:duitku/auth/presentation/pages/login_page.dart';
 import 'package:duitku/auth/presentation/bloc/providers/auth_provider.dart';
 import 'package:duitku/donasi/presentation/pages/donasi_page.dart';
+import 'package:duitku/investasiku/presentation/home_investasiku.dart';
 import 'package:duitku/main.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:duitku/news/news_show_page.dart';
+import 'package:duitku/blog/presentation/pages/blog_page.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
@@ -88,6 +91,28 @@ class _AppDrawerState extends State<AppDrawer> {
           authProv!.isAuthenticated
               ? ListTile(
                   title: const Text(
+                    "Blogs",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  leading: const Icon(Icons.public),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const BlogPage()));
+                  },
+                )
+              : const SizedBox(),
+          ListTile(
+            title: const Text("News", style: TextStyle(fontSize: 16)),
+            leading: const Icon(Icons.newspaper),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(NewsPage.routeName);
+            },
+          ),
+          authProv!.isAuthenticated
+              ? ListTile(
+                  title: const Text(
                     "Donasi",
                     style: TextStyle(fontSize: 16),
                   ),
@@ -95,6 +120,22 @@ class _AppDrawerState extends State<AppDrawer> {
                   onTap: () {
                     Navigator.of(context)
                         .pushReplacementNamed(DonasiHomePage.routeName);
+                  },
+                )
+              : const SizedBox(),
+          authProv!.isAuthenticated
+              ? ListTile(
+                  title: const Text(
+                    "Investasiku",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  leading: const Icon(Icons.money),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeInvestasikuPage()),
+                    );
                   },
                 )
               : const SizedBox(),
@@ -115,7 +156,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 _login(context);
               }
             },
-          )
+          ),
         ],
       ),
     );

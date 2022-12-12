@@ -1,6 +1,7 @@
 import 'package:duitku/wallet/data/models/transaction.dart';
 import 'package:duitku/wallet/data/models/transaction_group.dart';
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
+import 'package:duitku/wallet/presentation/pages/transaction_detail_page.dart';
 import 'package:duitku/wallet/presentation/widgets/wallet_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -132,6 +133,22 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                                             0),
                                               ),
                                               child: ListTile(
+                                                onTap: (
+                                                    [bool mounted =
+                                                        true]) async {
+                                                  await Navigator.of(context)
+                                                      .pushNamed(
+                                                    TransactionDetailPage
+                                                        .routeName,
+                                                    arguments: trx.id,
+                                                  );
+
+                                                  if (mounted) {
+                                                    await _walletProv
+                                                        ?.getTransactions(
+                                                            _walletId);
+                                                  }
+                                                },
                                                 title: Text(
                                                   trx.description,
                                                   style: const TextStyle(
