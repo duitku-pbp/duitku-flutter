@@ -4,7 +4,7 @@ import 'package:duitku/main.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:duitku/common/pages/news_show_page.dart';
+import 'package:duitku/news/news_show_page.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});

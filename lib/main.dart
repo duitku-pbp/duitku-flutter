@@ -9,7 +9,7 @@ import 'package:duitku/wallet/presentation/pages/transactions_page.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_detail_page.dart';
 import 'package:duitku/wallet/presentation/pages/wallet_home_page.dart';
 import 'package:duitku/wallet/presentation/bloc/providers/wallet_provider.dart';
-import 'package:duitku/common/pages/news_show_page.dart';
+import 'package:duitku/news/news_show_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
