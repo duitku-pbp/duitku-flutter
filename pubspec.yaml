@@ -43,11 +43,8 @@ dependencies:
   get_it: ^7.2.0
   cookie_jar: ^3.0.1
   shared_preferences: ^2.0.15
-<<<<<<< HEAD
-=======
   flutter_html: ^2.2.1
   timeago: ^3.3.0
->>>>>>> c986b058cd69b2bacdd68b547bdee49173161701
   url_launcher: ^6.1.7
 
 dev_dependencies:
