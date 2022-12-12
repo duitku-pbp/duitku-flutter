@@ -1,7 +1,8 @@
-import 'package:duitku/investasiku/data/investasiModels.dart';
-import 'package:duitku/investasiku/data/portofolioModels.dart';
+import 'package:duitku/investasiku/data/portofolio_models.dart';
 import 'package:duitku/investasiku/data/map.dart';
 import 'package:flutter/material.dart';
+
+// ignore_for_file: prefer_const_constructors
 
 class PortofolioDetail extends StatelessWidget {
   final Portofolio data;
@@ -13,9 +14,7 @@ class PortofolioDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text('Detail'),
       ),
-      body: Container(
-        margin: new EdgeInsets.symmetric(vertical: 20.0),
-        child: Column(
+      body: Column(
           children: [
             Center(
               child: Text(namemap[data.investment],
@@ -26,14 +25,14 @@ class PortofolioDetail extends StatelessWidget {
                 Text("Nilai Portofolio : ",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(data.bought_value.toString(),
+                Text(data.boughtValue.toString(),
                     style:
                         TextStyle(fontWeight: FontWeight.normal, fontSize: 16)),
               ],
             ),
           ],
         ),
-      ),
+      
       persistentFooterButtons: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(

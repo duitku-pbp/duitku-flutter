@@ -1,5 +1,7 @@
-import 'package:duitku/investasiku/data/investasiModels.dart';
+import 'package:duitku/investasiku/data/investasi_models.dart';
 import 'package:flutter/material.dart';
+
+// ignore_for_file: prefer_const_constructors
 
 class InvestasiDetail extends StatelessWidget {
   final Investasi data;
@@ -11,12 +13,10 @@ class InvestasiDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text('Detail Reksadana'),
       ),
-      body: Container(
-        margin: new EdgeInsets.symmetric(vertical: 20.0),
-        child: Column(
+      body: Column(
           children: [
             Center(
-              child: Text(data.investment_name,
+              child: Text(data.investmentName,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32)),
             ),
             Row(
@@ -24,7 +24,7 @@ class InvestasiDetail extends StatelessWidget {
                 Text("Tipe Investasi : ",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(data.investment_type,
+                Text(data.investmentType,
                     style:
                         TextStyle(fontWeight: FontWeight.normal, fontSize: 16)),
               ],
@@ -64,7 +64,7 @@ class InvestasiDetail extends StatelessWidget {
                 Text("Expense Ratio : ",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(data.expense_ratio.toString(),
+                Text(data.expenseRatio.toString(),
                     style:
                         TextStyle(fontWeight: FontWeight.normal, fontSize: 16)),
               ],
@@ -74,14 +74,13 @@ class InvestasiDetail extends StatelessWidget {
                 Text("Minimum Pembelian : ",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(data.min_buy.toString(),
+                Text(data.minBuy.toString(),
                     style:
                         TextStyle(fontWeight: FontWeight.normal, fontSize: 16)),
               ],
             ),
           ],
         ),
-      ),
       persistentFooterButtons: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(

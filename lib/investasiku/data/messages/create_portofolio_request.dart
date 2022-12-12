@@ -1,14 +1,14 @@
 class CreatePortofolioRequest {
-  int jumlah_beli;
+  int jumlahBeli;
   int pk;
 
   CreatePortofolioRequest({
-    required this.jumlah_beli,
+    required this.jumlahBeli,
     required this.pk,
   });
 
   Map<String, dynamic> toJson() => {
-        "jumlah_beli": jumlah_beli,
+        "jumlah_beli": jumlahBeli,
         "pk": pk,
       };
 }

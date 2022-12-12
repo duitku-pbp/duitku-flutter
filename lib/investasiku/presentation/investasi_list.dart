@@ -1,43 +1,29 @@
-import 'package:duitku/investasiku/data/map.dart';
-import 'package:duitku/investasiku/presentation/investasiList.dart';
-import 'package:duitku/investasiku/presentation/provider/investasiku_provider.dart';
-import 'package:duitku/investasiku/presentation/portofolioDetails.dart';
+import 'package:duitku/investasiku/presentation/investasi_details.dart';
 import 'package:flutter/material.dart';
+import 'package:duitku/investasiku/data/fetch_investasi.dart';
 import 'package:duitku/common/widgets/app_drawer.dart';
-import 'package:provider/provider.dart';
-class HomeInvestasikuPage extends StatefulWidget {
-  const HomeInvestasikuPage({super.key});
-  static const routeName = "/investasiku";
-
+class InvestasiListPage extends StatefulWidget {
+  const InvestasiListPage({super.key});
+  static const routeName = "/investasiku/reksadanalist";
   @override
-  State<HomeInvestasikuPage> createState() => HomeInvestasikuPageState();
+  State<InvestasiListPage> createState() => _InvestasiListPageState();
 }
 
-class HomeInvestasikuPageState extends State<HomeInvestasikuPage> {
-  PortofolioProvider? _portofolioProv;
-  
-  void initState() {
-    _portofolioProv = Provider.of<PortofolioProvider>(context, listen: false);
-    _portofolioProv?.getPortofolio();
-
-    super.initState();
-  }
-
+class _InvestasiListPageState extends State<InvestasiListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Portofolio Investasiku'),
+          title: const Text('Daftar Reksadana Untukmu'),
         ),
         drawer: const AppDrawer(),
         body: FutureBuilder(
-            future: _portofolioProv?.getPortofolio(),
+            future: fetchInvestasi(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-               else {
-                if (_portofolioProv!.portofolio.isEmpty) {
+              if (snapshot.data == null) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                if (!snapshot.hasData) {
                   return Column(
                     children: const [
                       Text(
@@ -50,7 +36,7 @@ class HomeInvestasikuPageState extends State<HomeInvestasikuPage> {
                   );
                 } else {
                   return ListView.builder(
-                      itemCount: _portofolioProv?.portofolio.length,
+                      itemCount: snapshot.data!.length,
                       itemBuilder: (_, index) => ListTile(
                           
                           title: GestureDetector(
@@ -58,8 +44,8 @@ class HomeInvestasikuPageState extends State<HomeInvestasikuPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PortofolioDetail(
-                                          data: _portofolioProv!.portofolio[index])));
+                                      builder: (context) => InvestasiDetail(
+                                          data: snapshot.data![index])));
                             },
                             child: Container(
                               margin: const EdgeInsets.symmetric(
@@ -81,7 +67,7 @@ class HomeInvestasikuPageState extends State<HomeInvestasikuPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    namemap[_portofolioProv!.portofolio[index].investment],
+                                    snapshot.data![index].investmentName,
                                     style: const TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
@@ -93,17 +79,7 @@ class HomeInvestasikuPageState extends State<HomeInvestasikuPage> {
                           )));
                 }
               }
-            }),
-            floatingActionButton: FloatingActionButton(
-                      onPressed: () {
-                  // Route menu ke halaman utama
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const InvestasiListPage()),
-                  );
-                },
-                      tooltip: 'Lihat Investasi',
-                      child: const Icon(Icons.money),
-                    ),);
+            })
+        );
   }
 }

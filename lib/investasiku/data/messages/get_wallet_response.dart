@@ -1,5 +1,4 @@
-import 'package:duitku/investasiku/data/portofolioModels.dart';
-import 'package:duitku/wallet/data/models/wallet.dart';
+import 'package:duitku/investasiku/data/portofolio_models.dart';
 
 class GetPortofolioResponse {
   final List<Portofolio> portofolio;

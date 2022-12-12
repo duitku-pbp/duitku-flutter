@@ -1,4 +1,4 @@
-import 'package:duitku/investasiku/data/portofolioModels.dart';
+import 'package:duitku/investasiku/data/portofolio_models.dart';
 import 'package:duitku/investasiku/data/repositories/investasiku_repositories.dart';
 import 'package:flutter/foundation.dart';
 

@@ -1,29 +1,44 @@
-import 'package:duitku/investasiku/presentation/investasiDetails.dart';
+import 'package:duitku/investasiku/data/map.dart';
+import 'package:duitku/investasiku/presentation/investasi_list.dart';
+import 'package:duitku/investasiku/presentation/provider/investasiku_provider.dart';
+import 'package:duitku/investasiku/presentation/portofolio_details.dart';
 import 'package:flutter/material.dart';
-import 'package:duitku/investasiku/data/fetchInvestasi.dart';
 import 'package:duitku/common/widgets/app_drawer.dart';
-class InvestasiListPage extends StatefulWidget {
-  const InvestasiListPage({super.key});
-  static const routeName = "/investasiku/reksadanalist";
+import 'package:provider/provider.dart';
+class HomeInvestasikuPage extends StatefulWidget {
+  const HomeInvestasikuPage({super.key});
+  static const routeName = "/investasiku";
+
   @override
-  State<InvestasiListPage> createState() => _InvestasiListPageState();
+  State<HomeInvestasikuPage> createState() => HomeInvestasikuPageState();
 }
 
-class _InvestasiListPageState extends State<InvestasiListPage> {
+class HomeInvestasikuPageState extends State<HomeInvestasikuPage> {
+  PortofolioProvider? _portofolioProv;
+  
+  @override
+  void initState() {
+    _portofolioProv = Provider.of<PortofolioProvider>(context, listen: false);
+    _portofolioProv?.getPortofolio();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Daftar Reksadana Untukmu'),
+          title: const Text('Portofolio Investasiku'),
         ),
         drawer: const AppDrawer(),
         body: FutureBuilder(
-            future: fetchInvestasi(),
+            future: _portofolioProv?.getPortofolio(),
             builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                if (!snapshot.hasData) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+               else {
+                if (_portofolioProv!.portofolio.isEmpty) {
                   return Column(
                     children: const [
                       Text(
@@ -36,7 +51,7 @@ class _InvestasiListPageState extends State<InvestasiListPage> {
                   );
                 } else {
                   return ListView.builder(
-                      itemCount: snapshot.data!.length,
+                      itemCount: _portofolioProv?.portofolio.length,
                       itemBuilder: (_, index) => ListTile(
                           
                           title: GestureDetector(
@@ -44,8 +59,8 @@ class _InvestasiListPageState extends State<InvestasiListPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => InvestasiDetail(
-                                          data: snapshot.data![index])));
+                                      builder: (context) => PortofolioDetail(
+                                          data: _portofolioProv!.portofolio[index])));
                             },
                             child: Container(
                               margin: const EdgeInsets.symmetric(
@@ -67,7 +82,7 @@ class _InvestasiListPageState extends State<InvestasiListPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${snapshot.data![index].investment_name}",
+                                    namemap[_portofolioProv!.portofolio[index].investment],
                                     style: const TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
@@ -79,7 +94,17 @@ class _InvestasiListPageState extends State<InvestasiListPage> {
                           )));
                 }
               }
-            })
-        );
+            }),
+            floatingActionButton: FloatingActionButton(
+                      onPressed: () {
+                  // Route menu ke halaman utama
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const InvestasiListPage()),
+                  );
+                },
+                      tooltip: 'Lihat Investasi',
+                      child: const Icon(Icons.money),
+                    ),);
   }
 }
